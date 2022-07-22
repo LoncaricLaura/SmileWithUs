@@ -1,17 +1,94 @@
 <template>
 <div class="">
     <div class="flex w-full h-[550px] bg-[url('/src/assets/home/homeScreen.png')] bg-cover bg-blend-multiply bg-white top-0">
-      <div class="flex my-auto text-5xl md:text-7xl text-left text-[#0300A6] font-bold px-12 md:px-24 w-3/4 lg:w-2/4 pt-24 lg:pt-8">
-          <p>Solutions in one place for all dental problems</p>
+      <div class="flex flex-col my-auto px-12 md:px-24 lg:px-32 w-full sm:w-3/4 lg:w-2/4 pt-24 lg:pt-24">
+          <p class="text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-16">Solutions in one place for all dental problems</p>
+          <router-link to="/login" v-if="!store.currentUserEmail"
+            class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+            >
+            Book an appoitment
+          </router-link>
+          <router-link to="/" v-if="store.currentUserEmail"
+            class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+            >
+            Book an appoitment
+          </router-link>
       </div>
     </div>
-    <div class="flex flex-col justify-center px-12 md:px-24 lg:px-80 pt-24">
-      <div class="text-4xl text-[#0300A6] font-bold ">About</div>
-      <div class="text-2xl text-black pt-8">We offer dental practices with top teams of experts with many years of experience. Choose your dental practice and place an order. Achieve a healthy and radiant smile with the best care.</div>
+    <div class="flex flex-col lg:flex-row items-center md:items-end py-16 md:py-32 space-x-24 lg:space-x-32 space-y-24 lg:space-y-0 px-12 md:px-24 lg:px-32">
+      <div class="flex flex-col items-start text-left w-full lg:w-1/2">
+        <div class="text-3xl sm:text-4xl text-slate-600 font-bold pb-2 border-b-2  border-[#244B8E] w-32">About</div>
+        <div class="text-xl sm:text-2xl text-slate-600 pt-8 leading-9">We offer dental practices with top teams of experts with many years of experience. Our offices provide superior services using the highest quality materials. Choose your dental practice and place an order. Achieve a healthy and radiant smile with the best care.</div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center space-x-0 sm:space-x-12 md:space-x-24 lg:space-x-24 xl:space-x-32 space-y-6 sm:space-y-0 text-slate-600 w-full lg:w-1/2">
+        <div class="flex flex-col space-y-3">  
+          <img src="/src/assets/home/ordination.svg" class="w-16 md:w-24 bg-gradient-to-r from-[#83A8E8] to-[#CBDFFF] rounded-full p-4">
+          <p class="text-3xl font-bold text-left">10</p>
+          <p class="text-md md:text-xl">ORDINATIONS</p>
+        </div>
+        <div class="flex flex-col space-y-3">
+          <img src="/src/assets/home/location.svg" class="w-16 md:w-24 bg-gradient-to-r from-[#83A8E8] to-[#CBDFFF] rounded-full p-4">
+          <p class="text-3xl font-bold text-left">15+</p>
+          <p class="text-md md:text-xl">PROFFESSIONALS</p>
+        </div>
+        <div class="flex flex-col space-y-3">
+          <img src="/src/assets/home/patient.svg" class="w-16 md:w-24 pb-3 bg-gradient-to-r from-[#83A8E8] to-[#CBDFFF] rounded-full p-4">
+          <p class="text-3xl font-bold text-left">200+</p>
+          <p class="text-md md:text-xl">HAPPY PATIENTS</p>
+        </div>
+      </div>
     </div>
+    <div class="flex flex-col justify-center items-center px-0 lg:px-32 pb-16 bg-[#EFF4FC]">
+      <div class="flex justify-center text-4xl text-slate-600 font-bold pt-16 pb-2 border-b-2 border-white">Dental offices</div>
+        <div class="grid md:grid-cols-2 md:grid-rows-5 lg:grid-cols-5 lg:grid-rows-2 mt-12 gap-4">
+        <OrdinationCard v-for="ordination in ordinations" :key="ordination.id" :name="ordination.name" :doctor="ordination.doctor" :id="ordination.id" />
+      </div>
+    </div> 
+    <!--<div class="flex flex-row my-8 ">
+      <div class="flex items-center w-1/3 h-[750px] bg-gradient-to-r from-[#6782B4] to-[#B1BFD8] rounded-tr-full rounded-br-full p-0 lg:pl-32 lg:pl-16 lg:mt-8">
+        <div class="flex justify-center text-4xl text-slate-600 font-bold pt-16 pb-2 border-b-2 border-white">Dental offices</div>
+      </div>
+      <div class="grid grid-cols-2 grid-rows-5 gap-10 p-0 lg:pr-32 lg:pl-16 mx-auto">
+        <OrdinationCard v-for="ordination in ordinations" :key="ordination.id" :name="ordination.name" :doctor="ordination.doctor" :id="ordination.id" />
+      </div>
+    </div>-->
+   <!-- <div class="flex justify-center py-16 mt-8">
+        <OrdinationsSlider :ordinations="ordinations" />
+    </div> -->
   </div>
 </template>
 
-<style scoped>
+<script>
+//import OrdinationsSlider from '/src/components/OrdinationsSlider.vue'
+import OrdinationCard from '/src/components/OrdinationCard.vue'
+import { db } from '../firebase'
+import { collection, getDocs } from 'firebase/firestore'
+import { store } from '../store'
 
-</style>
+export default {
+  name: 'homeScreen',
+  data() {
+    return {
+      ordinations: [],
+      store,
+      ordinationId: null
+    }
+  },
+  components: {
+    OrdinationCard,
+    //OrdinationsSlider
+  },
+  methods: {
+    async getOrdiantions() {
+      const querySnapshot = await getDocs(collection(db, `ordinations`))
+      querySnapshot.forEach((doc) => {
+        this.ordinations.push(doc.data())
+        console.log(doc.data())
+      })
+    },
+  },
+  beforeMount() {
+    this.getOrdiantions()
+  } 
+}
+</script>

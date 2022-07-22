@@ -1,6 +1,6 @@
 <template>
     <div
-        class="absolute flex w-full h-full lg:h-auto px-6 sm:px-12 md:px-24 pt-4 top-0 lg:top-0 pt-8"
+        class="absolute flex w-full h-full lg:h-auto px-6 sm:px-12 md:px-24 lg:px-32 pt-4 top-0 lg:top-0 pt-8"
         :class="
             open
                 ? 'bg-gradient-to-r from-gray-700 to-gray-900 lg:bg-inherit transform origin-top-right transition duration-300 fade-in-out'
@@ -10,7 +10,7 @@
         <div class="flex items-top lg:items-center pt-6 lg:pt-0">
             <router-link to="/">
                 <p
-                    class="text-3xl md:text-4xl font-extrabold text-[#0300A6] italic"
+                    class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
                     :class="[open ? 'text-[white]' : '']"
                 >
                     WorldOfSmiles
@@ -74,47 +74,80 @@
             </button>
         </div>
         <div
-            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-[140px] lg:pt-0 text-xl lg:flex lg:text-xl font-bold text-white lg:text-[#0300A6] text-end items-end lg:items-center"
+            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-[140px] lg:pt-0 text-xl lg:flex lg:text-xl font-bold text-white lg:text-[#244B8E] text-end items-end lg:items-center"
             :class="open ? 'block ' : 'hidden'"
         >
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
-                <router-link to="/" class="hover:font-bold" @click="closeMenu"
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.currentUserEmail"
                     >Home
                 </router-link>
 
-                <router-link to="/" class="hover:font-bold" @click="closeMenu"
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.currentUserEmail"
                     >Ordiantions</router-link
                 >
             </div>
             <div class="flex flex-col lg:flex-row items-end lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
-                <router-link to="/signup" @click="closeMenu" class="hover:font-bold text-[#0300A6] lg:text-white bg-white lg:bg-[#0300A6] py-2 px-4"
+                <router-link to="/signup" @click="closeMenu" v-if="!store.currentUserEmail" class="hover:font-bold text-[#1B3B73] lg:text-white bg-white lg:bg-[#1B3B73] py-2 px-4 rounded-full"
                     >Sign up</router-link
                 >
                 <router-link
-                    to="/"
+                    to="/login"
                     @click="closeMenu"
                     class="hover:font-bold "
+                    v-if="!store.currentUserEmail"
                     >Login </router-link
                 >
-                <div class="flex flex-row font-normal pl-6">
-                    <div class="mr-2">HR</div> |
-                    <div class="ml-2">EN</div>
+                <div
+                    v-if="store.currentUserEmail"
+                    class="text-[#1B3B73] pl-2 cursor-pointer "
+                    @click="signout()"
+                >
+                    Log out
                 </div>
             </div>
-
         </div>
+        
+          <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.currentName">
+            Hi, {{ store.currentName }}
+          </div>
     </div>
 </template>
 
 <script>
+import { db } from '../firebase'
+import { store } from '../store'
+import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth'
+
+const auth = getAuth()
+//monitoring the user's login status
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        store.currentUserEmail = user.email
+        localStorage.setItem('checkLogedUser', store.currentUserEmail)
+        store.currentName = user.displayName
+        store.currentUid = user.uid
+
+
+    } else {
+        store.currentUserEmail = null
+        store.currentName = null
+        localStorage.clear()
+    }
+})
+
 export default {
     name: 'AppHeader',
     data() {
         return {
             open: false,
+            store,
+            users: []
         }
+    },
+    firestore: {
+        users: db.collection('users'),
     },
     methods: {
         closeMenu() {
@@ -122,6 +155,15 @@ export default {
         },
         toggle() {
             this.open = !this.open
+        },
+        signout() {
+            signOut(auth)
+                .then(() => {
+                    this.$router.replace({ name: '/' })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         },
     },
 }

@@ -10,6 +10,11 @@
 
 <script>
 import AppHeader from './components/AppHeader.vue'
+export default {
+  components: {
+    AppHeader
+  }
+}
 </script>
 
 
@@ -21,4 +26,5 @@ import AppHeader from './components/AppHeader.vue'
   text-align: center;
   color: #2c3e50;
 }
+
 </style>
