@@ -52,9 +52,15 @@
                 </div>
             </form>
         </div>
-            <div class="flex flex-col w-full lg:w-1/2 h-1/4 md:h-full bg-[#385B97] py-8 md:py-24 lg:pt-44 px-4 sm:px-12 lg:px-16 order-first lg:order-none rounded-r-2xl">
+            <div class="flex flex-col w-full lg:w-1/2 h-1/4 md:h-full bg-[#385B97] py-8 md:py-24 lg:pt-32 px-4 sm:px-12 lg:px-16 order-first lg:order-none rounded-r-2xl">
                 <p class="text-white text-2xl md:text-5xl">Welcome back!</p>
                 <p class="text-white text-lg md:text-2xl mt-2 md:mt-8">Log in to your account</p>
+                <div class="mt-12 text-sm font-display text-slate-100 text-center">Don't have an account?
+                    <router-link to="/signup"
+                    ><a class="cursor-pointer text-slate-100 hover:text-bold font-bold"
+                        >Sign up</a
+                    ></router-link>
+                </div>
                 <img src="/src/assets/teeth.png" class="hidden lg:flex mx-0 xl:mx-32">
         </div>
     </div>

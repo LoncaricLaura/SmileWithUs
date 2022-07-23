@@ -13,7 +13,7 @@
                     class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
                     :class="[open ? 'text-[white]' : '']"
                 >
-                    WorldOfSmiles
+                    SmileWithUs
                 </p>
             </router-link>
         </div>
@@ -80,27 +80,27 @@
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
-                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.currentUserEmail"
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
                     >Home
                 </router-link>
 
-                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.currentUserEmail"
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
                     >Ordiantions</router-link
                 >
             </div>
             <div class="flex flex-col lg:flex-row items-end lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
-                <router-link to="/signup" @click="closeMenu" v-if="!store.currentUserEmail" class="hover:font-bold text-[#1B3B73] lg:text-white bg-white lg:bg-[#1B3B73] py-2 px-4 rounded-full"
+                <router-link to="/signup" @click="closeMenu" v-if="!store.state.currentUserEmail" class="hover:font-bold text-[#1B3B73] lg:text-white bg-white lg:bg-[#1B3B73] py-2 px-4 rounded-full"
                     >Sign up</router-link
                 >
                 <router-link
                     to="/login"
                     @click="closeMenu"
                     class="hover:font-bold "
-                    v-if="!store.currentUserEmail"
+                    v-if="!store.state.currentUserEmail"
                     >Login </router-link
                 >
                 <div
-                    v-if="store.currentUserEmail"
+                    v-if="store.state.currentUserEmail"
                     class="text-[#1B3B73] pl-2 cursor-pointer "
                     @click="signout()"
                 >
@@ -109,8 +109,8 @@
             </div>
         </div>
         
-          <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.currentName">
-            Hi, {{ store.currentName }}
+          <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.state.currentName">
+            Hi, {{ store.state.currentName }}
           </div>
     </div>
 </template>
@@ -124,15 +124,13 @@ const auth = getAuth()
 //monitoring the user's login status
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        store.currentUserEmail = user.email
-        localStorage.setItem('checkLogedUser', store.currentUserEmail)
-        store.currentName = user.displayName
-        store.currentUid = user.uid
-
-
+        store.state.currentUserEmail = user.email
+        localStorage.setItem('checkLogedUser', store.state.currentUserEmail)
+        store.state.currentName = user.displayName
+        store.state.currentUid = user.uid
     } else {
-        store.currentUserEmail = null
-        store.currentName = null
+        store.state.currentUserEmail = null
+        store.state.currentName = null
         localStorage.clear()
     }
 })

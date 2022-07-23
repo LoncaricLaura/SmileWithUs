@@ -1,8 +1,14 @@
 <template>
     <div class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 lg:mx-32 xl:mx-72 mt-40 sm:mt-32 lg:mt-44 h-[850px] lg:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-2xl">
-        <div class="flex flex-col w-full lg:w-1/2  h-full bg-[#385B97] py-12 lg:pt-44 px-6 xl:px-24 rounded-l-2xl">
+        <div class="flex flex-col w-full lg:w-1/2  h-full bg-[#385B97] py-12 lg:pt-32 px-6 xl:px-24 rounded-l-2xl">
             <p class="text-white text-2xl md:text-5xl">Sign up</p>
             <p class="text-white text-lg md:text-2xl mt-2 md:mt-8">to use all features of the application</p>
+            <div class="mt-12 text-sm font-display text-slate-100 text-center">Already have an account?
+                <router-link to="/login"
+                ><a class="cursor-pointer text-slate-100 hover:text-bold font-bold"
+                    >Log in</a
+                ></router-link>
+                </div>
             <img src="/src/assets/teeth.png" class="hidden lg:flex mx-0 lg:mx-24">
         </div>
         <div class="flex w-full lg:w-1/2  px-4 sm:px-12 lg:px-24 py-6 lg:py-0">

@@ -1,4 +1,4 @@
-# WorldOfSmiles
+# SmileWithUs
 
 ## Final project
 

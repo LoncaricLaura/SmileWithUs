@@ -3,8 +3,8 @@
         <div class="flex flex-col w-full">
             <button type="button" @click="toggle" class="flex flex-row cursor-pointer w-full">
                 <div class="text-left text-xl sm:text-3xl lg:text-4xl text-slate-600 font-bold mx-4 md:mx-24 lg:mx-0 w-full">{{ serviceName }}</div>
-                <img src="/src/assets/ordinationScreen/plus.png" class="h-8 md:h-12" :class="open ? 'hidden' : 'block'">
-                <img src="/src/assets/ordinationScreen/minus.png" class="h-8 md:h-12" :class="open ? 'block' : 'hidden'">
+                <img src="/src/assets/ordinationScreen/plus.png" class="h-8 md:h-10" :class="open ? 'hidden' : 'block'">
+                <img src="/src/assets/ordinationScreen/minus.png" class="h-8 md:h-10" :class="open ? 'block' : 'hidden'">
             </button>
             <div class="transition-all duration-800 ease-in-out pt-4 md:pt-8" :class="open ? 'block' : 'hidden'">
                 <div class="text-left text-lg md:text-2xl text-slate-600 font-medium mx-0 md:mx-24 lg:mx-0 pt-3 md:pt-5">{{ desc }}</div>
