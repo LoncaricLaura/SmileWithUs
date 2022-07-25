@@ -1,13 +1,13 @@
 <template>
     <div
-        class="absolute flex w-full h-full lg:h-auto px-6 sm:px-12 md:px-24 lg:px-32 pt-4 top-0 lg:top-0 pt-8"
+        class="absolute justify-between flex w-full lg:h-auto px-8 sm:px-12 md:px-24 lg:px-32 pt-4 top-0 lg:top-0 pt-8"
         :class="
             open
-                ? 'bg-gradient-to-r from-gray-700 to-gray-900 lg:bg-inherit transform origin-top-right transition duration-300 fade-in-out'
+                ? 'flex flex-wrap bg-[#385B97] lg:bg-inherit transform origin-top-right transition duration-300 fade-in-out h-full pb-[700px]'
                 : ''
         "
     >
-        <div class="flex items-top lg:items-center pt-6 lg:pt-0">
+        <div class="flex items-top lg:items-center pt-6 lg:pt-0" >
             <router-link to="/">
                 <p
                     class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
@@ -18,9 +18,9 @@
             </router-link>
         </div>
 
-        <div class="lg:hidden flex justify-end fixed right-6 sm:right-12 md:right-24 top-16">
+        <div class="lg:hidden flex right-6 sm:right-12 md:right-24 top-16">
             <button
-                class="flex items-center px-6 py-3 rounded font-extrabold text-[0300A6]"
+                class="flex items-center px-6 pt-4 rounded font-extrabold text-[0300A6] order-last"
                 @click="toggle"
             >
                 <svg
@@ -34,7 +34,7 @@
                 </svg>
 
                 <svg
-                    class="close absolute transform transition duration-1000 ease-in-out"
+                    class="close absolute flex transform transition duration-1000 ease-in-out"
                     :class="open ? 'close' : 'hidden'"
                     height="18px"
                     version="1.1"
@@ -74,18 +74,18 @@
             </button>
         </div>
         <div
-            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-[140px] lg:pt-0 text-xl lg:flex lg:text-xl font-bold text-white lg:text-[#244B8E] text-end items-end lg:items-center"
+            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-24 lg:pt-0 lg:flex text-xl font-bold text-white lg:text-[#244B8E] text-end items-end lg:items-center"
             :class="open ? 'block ' : 'hidden'"
         >
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
                 <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
-                    >Home
+                    >Dental offices
                 </router-link>
 
                 <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
-                    >Ordiantions</router-link
+                    >Special services</router-link
                 >
             </div>
             <div class="flex flex-col lg:flex-row items-end lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
@@ -95,13 +95,15 @@
                 <router-link
                     to="/login"
                     @click="closeMenu"
-                    class="hover:font-bold "
+                    class="hover:font-bold"
+                    :class="[open ? 'mr-3' : 'mr-0']"
                     v-if="!store.state.currentUserEmail"
                     >Login </router-link
                 >
                 <div
                     v-if="store.state.currentUserEmail"
-                    class="text-[#1B3B73] pl-2 cursor-pointer "
+                    class=" pl-2 cursor-pointer"
+                    :class="[open ? 'text-white' : 'text-[#1B3B73]']"
                     @click="signout()"
                 >
                     Log out
@@ -109,9 +111,9 @@
             </div>
         </div>
         
-          <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.state.currentName">
+         <!-- <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.state.currentName">
             Hi, {{ store.state.currentName }}
-          </div>
+          </div> -->
     </div>
 </template>
 
@@ -141,7 +143,8 @@ export default {
         return {
             open: false,
             store,
-            users: []
+            users: [],
+            visible: false,
         }
     },
     firestore: {

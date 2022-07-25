@@ -8,7 +8,7 @@
     </div>
 
         <div class="px-6 sm:px-12 md:px-24 lg:px-44">
-            <AboutOrdination v-for="service in services" :key="service.id" :serviceName="service.name" :desc="service.description" :usage="service.usage" :process="service.process" :prostheses="service.prostheses" :crowns="service.crowns" :bridges="service.bridges" />
+            <AboutOrdination v-for="service in services" :key="service.id" :serviceName="service.name" :desc="service.description" :usage="service.usage" :process="service.process" :prostheses="service.prostheses" :crowns="service.crowns" :bridges="service.bridges" :image="service.image" />
         </div>
 </div>
 </template>

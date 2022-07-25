@@ -1,9 +1,11 @@
 <template>
     <Splide :options="splide" class="splide">
-        <SplideSlide class="splide__track flex justify-center" >
-                <ul class="splide__list flex flex-row w-[650px] bg-slate-100 rounded-md">
-                    <li class="splide__slide flex flex-col items-center justify-between pt-8 md:pt-12 pb-12 md:pb-6 w-full">
-                        <div class="text-3xl text-black font-medium mx-16 md:mx-24 lg:mx-0"></div>
+        <SplideSlide class="splide__track flex justify-center" v-for="(ordination,i) in ordinations" :key="i" >
+                <ul class="splide__list flex flex-row w-[650px] bg-[#385B97] rounded-md">
+                    <li class="splide__slide flex flex-col items-center justify-between pt-8 md:pt-12 pb-16 md:pb-12 w-full">
+                        <div class="text-3xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16">{{ ordination.name }}</div>
+                        <div class="text-2xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16 italic">{{ ordination.doctor }}</div>
+                        <router-link :to="{ name: 'ordinationScreen', params: { name: ordination.name, doctor: ordination.doctor, id: ordination.id}, }" class="flex justify-center bg-slate-100 text-[#385B97] text-lg font-bold p-2 rounded-full w-[150px]">SEE MORE</router-link>
                     </li>
                 </ul>
         </SplideSlide>
@@ -17,12 +19,17 @@ import '@splidejs/vue-splide/css';
 
 export default {
     name: 'OrdinationsSlider',
+    props: {
+        ordinations: {
+            type: Array
+        }
+    },
     data() {
         return {
             splide: {
                 type: 'loop',
                 width: '50%',
-                height: '300px',
+                height: '350px',
                 perPage: 1,
                 arrows: true,
                 pagination: false,
@@ -30,9 +37,9 @@ export default {
                 gap: -90,
                 rewindspeed:5000,
                 breakpoints: {
-                    1024: {
+                    1250: {
                         perPage: 1,
-                        width: '75%'
+                        width: '100%',
                     },
                     768: {
                         rewind: false,
@@ -41,7 +48,6 @@ export default {
                         perMove: 1,
                         arrows: false,
                         width: '100%',
-                        height: '250px'
                     }
                 } 
             }
@@ -54,3 +60,11 @@ export default {
 
 }
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+    .splide-list {
+        width: 100%;
+    }
+}
+</style>

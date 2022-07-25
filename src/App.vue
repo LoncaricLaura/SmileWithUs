@@ -4,16 +4,21 @@
 </script>
 
 <template>
-     <AppHeader />
-      <router-view/>
+  <div class="flex flex-col justify-between h-screen">
+    <AppHeader />
+    <router-view/>
+    <AppFooter  />
+  </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 
 export default {
   components: {
     AppHeader,
+    AppFooter
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 xl:mx-80 mt-36 sm:mt-44 lg:mt-44 h-[500px] sm:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-2xl">
+    <div class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 xl:mx-80 mt-36 sm:mt-44 md:mt-56 lg:mt-44 h-[600px] sm:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-2xl">
         <div class="flex items-center w-full lg:w-1/2 h-3/4 md:h-full py-8 px-4 sm:p-24 lg:px-24">
             <form class="space-y-6 w-full ">
                 <div class="flex flex-col items-start">
@@ -33,7 +33,7 @@
                         required
                         autocomplete="current-password"
                     />
-                    <span class="text-[#E55050] pt-1" v-if="password == ''">{{
+                    <span class="text-[#3D619E] pt-1" v-if="password == ''">{{
                         error
                     }}</span>
                 </div>
@@ -52,10 +52,10 @@
                 </div>
             </form>
         </div>
-            <div class="flex flex-col w-full lg:w-1/2 h-1/4 md:h-full bg-[#385B97] py-8 md:py-24 lg:pt-32 px-4 sm:px-12 lg:px-16 order-first lg:order-none rounded-r-2xl">
-                <p class="text-white text-2xl md:text-5xl">Welcome back!</p>
-                <p class="text-white text-lg md:text-2xl mt-2 md:mt-8">Log in to your account</p>
-                <div class="mt-12 text-sm font-display text-slate-100 text-center">Don't have an account?
+            <div class="flex flex-col w-full lg:w-1/2 md:h-full bg-[#385B97] py-8 md:py-24 lg:pt-32 px-4 sm:px-12 lg:px-16 order-first lg:order-none rounded-t-2xl lg:rounded-r-2xl lg:rounded-tl-none">
+                <p class="text-white text-3xl md:text-5xl">Welcome back!</p>
+                <p class="text-white text-lg md:text-2xl mt-4 md:mt-8">Log in to your account</p>
+                <div class="mt-6 md:mt-12 text-sm font-display text-slate-100 text-center">Don't have an account?
                     <router-link to="/signup"
                     ><a class="cursor-pointer text-slate-100 hover:text-bold font-bold"
                         >Sign up</a
