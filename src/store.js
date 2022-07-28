@@ -17,7 +17,8 @@ export const store = createStore({
         currentName: null,
         selectedOrdinationId: null,
         selectedOrdination: '',
-        selectedService: ''
+        selectedService: '',
+        selectedDate: ''
     },
     mutations: {},
     actions: {},

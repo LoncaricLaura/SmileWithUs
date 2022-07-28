@@ -6,6 +6,9 @@ import ordinationScreen from '/src/views/ordinationScreen.vue'
 import chooseOrdination from '/src/views/chooseOrdination.vue'
 import chooseService from '/src/views/chooseService.vue'
 import chooseAppointment from '/src/views/chooseAppointment.vue'
+import sucessOrder from '/src/views/sucessOrder.vue'
+import priceList from '/src/views/priceList.vue'
+
 import { store } from '../store'
 
 const routes = [
@@ -50,6 +53,19 @@ const routes = [
         name: 'chooseAppointment',
         component: chooseAppointment,
         meta: { title: 'ChooseAppointment | SmileWithUs' }
+    },
+    {
+        path: '/sucessOrder',
+        name: 'sucessOrder',
+        component: sucessOrder,
+        meta: { title: 'SucessOrder | SmileWithUs' }
+    },
+    {
+        path: '/ordination/:name/priceList',
+        name: 'priceList',
+        component: priceList,
+        props: true,
+        meta: { title: 'PriceList | SmileWithUs' }
     }
 ]
 const router = createRouter({

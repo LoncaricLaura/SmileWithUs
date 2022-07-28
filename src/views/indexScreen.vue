@@ -42,15 +42,15 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col items-end px-0 lg:pl-36 lg:pr-24 py-16 xl:bg-[url('/src/assets/home/ordination.jpg')] xl:bg-contain xl:bg-no-repeat bg-blend-darken bg-[#EFF4FC]" >
+    <div class="flex flex-col items-end px-0 md:px-32 xl:pl-48 xl:pr-12 py-16 xl:bg-[url('/src/assets/home/background.jpg')] xl:bg-contain xl:bg-no-repeat bg-blend-darken bg-[#EFF4FC]" >
       <div class="flex justify-center text-3xl sm:text-4xl text-slate-600 font-bold py-2 w-full xl:w-1/2">Dental offices</div>
       <div class="flex lg:justify-center xl:justify-end py-8 sm:py-16 mt-8 w-full">
         <OrdinationsSlider :ordinations="ordinations" />
       </div>
     </div>
-    <div class="flex flex-col items-center px-6 md:px-16 lg:px-32 py-24 gap-16 md:gap-24">
+    <div class="flex flex-col items-center px-6 md:px-16 lg:px-32 py-24 lg:pt-24 lg:pb-32 gap-16 md:gap-24">
       <div class="flex justify-start text-3xl sm:text-4xl text-slate-600 font-bold pb-2">Special services we offer</div>
-      <div class="flex flex-col xl:flex-row gap-10">
+      <div class="flex flex-col xl:flex-row gap-6">
         <SpecialServicesCard v-for="service in specialServices" :key="service.id" :name="service.name" :desc="service.description" :image="service.image" />
       </div>
     </div>

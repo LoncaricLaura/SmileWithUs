@@ -80,8 +80,8 @@
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
-                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
-                    >Dental offices
+                <router-link to="/" @click="closeMenu" v-if="store.state.currentUserEmail"
+                    >Dental offices 
                 </router-link>
 
                 <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"

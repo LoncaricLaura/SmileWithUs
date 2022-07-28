@@ -5,7 +5,7 @@
                     <li class="splide__slide flex flex-col items-center justify-between pt-8 md:pt-12 pb-16 md:pb-12 w-full">
                         <div class="text-3xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16">{{ ordination.name }}</div>
                         <div class="text-2xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16 italic">{{ ordination.doctor }}</div>
-                        <router-link :to="{ name: 'ordinationScreen', params: { name: ordination.name, doctor: ordination.doctor, id: ordination.id}, }" class="flex justify-center bg-slate-100 text-[#385B97] text-lg font-bold p-2 rounded-full w-[150px]">SEE MORE</router-link>
+                        <router-link :to="{ name: 'ordinationScreen', params: { name: ordination.name, doctor: ordination.doctor, id: ordination.id, contact: ordination.contact }, }" class="flex justify-center bg-slate-100 text-[#385B97] text-lg font-bold p-2 rounded-full w-[150px]">SEE MORE</router-link>
                     </li>
                 </ul>
         </SplideSlide>
