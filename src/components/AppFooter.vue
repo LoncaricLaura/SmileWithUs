@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col md:flex-row justify-between bg-[#385B97] w-full py-8 px-12 md:px-32" v-if="this.$route.path !== '/login' && this.$route.path !== '/signup' && this.$route.path !== '/adminSignup'">
+    <div class="flex flex-col md:flex-row justify-between bg-[#385B97] w-full py-8 px-12 md:px-32" v-if="this.$route.path !== '/login' && this.$route.path !== '/signup' && this.$route.path !== '/adminSignIn'">
         <div class="flex flex-col space-y-4 text-left mb-3 md:mb-0">
             <router-link to="/">
                 <p

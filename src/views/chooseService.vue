@@ -3,6 +3,7 @@
         <div class="flex flex-col justify-center items-center w-full h-[350px] bg-[#EFF4FC] bg-opacity-75 pt-0 md:pt-8 px-6 md:px-24 lg:px-32">
             <div class="text-5xl md:text-6xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold py-12">Select the service you need</div>
             <div class="text-2xl md:text-4xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold">in <i>{{ store.state.selectedOrdination }}</i></div>
+            <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
         </div>
         <div class="flex flex-col items-center w-full px-12 md:px-24 lg:px-32 py-12">
             <div class=" w-full">
@@ -117,7 +118,10 @@ export default {
     async selectService() {
         store.state.selectedService = this.selected.name
         console.log(store.selectedService)
-    }
+    },
+    goBack() {
+        return this.$router.go(-1)
+    },
   },
   beforeMount() {
     this.selectService()

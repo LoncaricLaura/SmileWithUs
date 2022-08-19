@@ -1,12 +1,18 @@
 <template>
     <div>
-        <div class="flex justify-center items-center w-full h-[350px] bg-[url('/src/assets/ordinationScreen/background.jpeg')] bg-cover bg-bottom bg-opacity-75 px-6 md:px-24 lg:px-32">
-            <div class="flex flex-col items-center pt-24">
-                <div class="text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-8">Price list</div>
-                <div class="text-3xl md:text-4xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-4">Free first review for every service</div>
-                <div class="text-lg md:text-xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97]">All prices are determined in agreement with the patient after the examination</div>
+        <div class="flex justify-center w-full h-[350px] bg-[url('/src/assets/ordinationScreen/background.jpeg')] bg-cover bg-bottom bg-opacity-75 px-6 md:px-24 lg:px-32">
+            <div class="flex flex-col pt-24 w-full">
+                <div class="flex self-center text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-8">Price list</div>
+                <div class="flex self-center text-3xl md:text-4xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-4">Free first review for every service</div>
+                <div class="flex self-center text-lg md:text-xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97]">All prices are determined in agreement with the patient after the examination</div>
+                <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
             </div>
         </div>
+        <Loading
+            :active="isLoading"
+            :is-full-page="fullPage"
+            :loader="loader"
+        />
         <div class="flex justify-center py-12 px-32">
             <table class="flex flex-col w-1/2">
                 <thead class="flex bg-[#385B97] text-xl text-slate-100 px-4 py-2 mb-2 rounded-t-2xl">
@@ -36,6 +42,8 @@ import {
     onSnapshot
 } from 'firebase/firestore'
 import { store } from '../store'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
     name: 'priceList',
@@ -43,8 +51,14 @@ export default {
     data() {
         return {
             prices: [],
-            store
+            store,
+            isLoading: false,
+            fullPage: true,
+            loader: 'spinner',
         }
+    },
+    components: {
+        Loading
     },
     methods: {
         async getPriceList() {
@@ -53,10 +67,15 @@ export default {
                 snapshot.docChanges().forEach((change) => {
                     this.prices.push(change.doc.data())
                     console.log(this.prices)
+                    this.isLoading = false
                 })
             })
-        }
+            this.isLoading = true
 
+        },
+        goBack() {
+          return this.$router.go(-1)
+        },
     },
     beforeMount() {
         this.getPriceList()

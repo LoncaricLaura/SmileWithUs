@@ -1,6 +1,11 @@
 <template>
     <div>
         <div class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 lg:mx-32 xl:mx-72 mt-40 sm:mt-32 md:mt-36 lg:mt-44 h-[860px] sm:h-[930px] lg:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-2xl">
+        <loading
+            :active="isLoading"
+            :is-full-page="fullPage"
+            :loader="loader"
+        />
             <div class="flex flex-col w-full lg:w-1/2  h-full bg-[#385B97] py-12 lg:pt-32 px-6 xl:px-24 lg:order-none rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
                 <p class="text-white text-3xl md:text-5xl">Sign up</p>
                 <p class="text-white text-lg md:text-2xl mt-4 md:mt-8">to use all features of the application</p>
@@ -41,6 +46,7 @@
                             placeholder="030345761795"
                             required
                             autocomplete="email"
+                            maxlength="11"
                         />
                         <label
                             for="passwordWarning"
@@ -123,10 +129,6 @@
                 </form>
             </div>
         </div>
-        <div class="flex flex-row justify-center items-center space-x-2 pt-12 text-lg hover:font-bold text-[#244B8E]">
-            <img src="/src/assets/dentist.png" class="w-8">
-            <router-link to="/adminSignIn">Admin</router-link>
-        </div>
     </div>
 </template>
 
@@ -139,6 +141,8 @@ import {
 } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { store } from '../store'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
     name: 'signUp',
@@ -148,8 +152,14 @@ export default {
             identification: '',
             username: '',
             password: '',
-            passwordRepeat: ''
+            passwordRepeat: '',
+            isLoading: false,
+            fullPage: true,
+            loader: 'dots',
         }
+    },
+    components: {
+        Loading
     },
     methods: {
         signup() {
@@ -158,14 +168,58 @@ export default {
                 .then((userCredential) => {
                     const user = userCredential.user
                     const uid = user.uid
-                    store.currentName = this.fullName
+                    store.state.currentName = this.fullName
                     console.log(user)
+
+                    // Check if user meets role criteria.
+                   /* if (
+                        user.email &&
+                        user.email.endsWith('@admin.com')
+                    ) {
+                        setDoc(doc(db, 'admins', uid), {
+                            fullName: this.fullName,
+                            identification: this.identification,
+                            email: user.email,
+                            admin: true
+                        })
+                    }
+                    else {
+                        setDoc(doc(db, 'users', uid), {
+                            fullName: this.fullName,
+                            identification: this.identification,
+                            email: user.email,
+                            admin: false
+                        })
+                        }
+                    this.isLoading = false
+                    console.log('Reg Success! Email: ' + user.email)
+                })
+                .then(() => {
+                    // for updating profile on signup
+                    updateProfile(autho.currentUser, {
+                        displayName: this.fullName,
+                    })
+                    if (autho.currentUser && autho.currentUser.email.endsWith('@admin.com')) {
+                        this.$router.replace({ path: '/adminScreen' })
+                    }
+                    else {
+                        this.$router.replace({ path: '/' })
+                    }
+                })
+                .catch((e) => {
+                    console.error(e.message)
+                    alert(e.message)
+                    store.currentName = null
+                })
+                this.isLoading = true */
                     // add new user in document with uid from auth
                     setDoc(doc(db, 'users', uid), {
                         fullName: this.fullName,
                         identification: this.identification,
                         email: user.email,
+                        isAdmin: "user",
                     })
+                    this.isLoading = false
                     console.log('Reg Success! Email: ' + user.email)
                 })
                 .then(() => {
@@ -179,7 +233,9 @@ export default {
                     console.error(e.message)
                     alert(e.message)
                     store.currentName = null
-                })
+                }) 
+                this.isLoading = true
+                
         }
     }
 }

@@ -7,16 +7,17 @@
             <div class="italic">{{ store.state.currentName }}</div>
           </div>
           <p class="text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-16">Solutions in one place for all dental problems</p>
-          <router-link to="/login" v-if="!store.state.currentUserEmail"
+          <router-link to="/login" v-if="!store.state.currentUserEmail "
             class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
             >
             Book an appoitment
           </router-link>
-          <router-link to="/chooseOrdination" v-if="store.state.currentUserEmail"
+          <router-link to="/chooseordination" v-if="store.state.currentUserEmail "
             class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
             >
             Book an appoitment
           </router-link>
+
       </div>
     </div>
     <div class="flex flex-col xl:flex-row items-center md:items-end py-16 md:py-32 space-x-24 lg:space-x-32 space-y-24 lg:space-y-0 px-12 md:px-24 lg:px-32">
@@ -42,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col items-end px-0 md:px-32 xl:pl-48 xl:pr-12 py-16 xl:bg-[url('/src/assets/home/background.jpg')] xl:bg-contain xl:bg-no-repeat bg-blend-darken bg-[#EFF4FC]" >
+    <div class="flex flex-col items-end px-0 md:px-32 xl:pl-48 xl:pr-12 py-16 xl:bg-[url('/src/assets/home/background.jpg')] xl:bg-contain xl:bg-no-repeat bg-blend-darken bg-[#EFF4FC]" v-if="store.state.userRole !== true">
       <div class="flex justify-center text-3xl sm:text-4xl text-slate-600 font-bold py-2 w-full xl:w-1/2">Dental offices</div>
       <div class="flex lg:justify-center xl:justify-end py-8 sm:py-16 mt-8 w-full">
         <OrdinationsSlider :ordinations="ordinations" />
@@ -72,7 +73,7 @@ export default {
     return {
       ordinations: [],
       store,
-      specialServices: []
+      specialServices: [],
     }
   },
   components: {
@@ -85,16 +86,17 @@ export default {
       const querySnapshot = await getDocs(collection(db, `ordinations`))
       querySnapshot.forEach((doc) => {
         this.ordinations.push(doc.data())
-        console.log(doc.data())
+        // console.log(doc.data())
       })
     },
     async getSpecialServices() {
       const querySnapshot = await getDocs(collection(db, `specialServices`))
       querySnapshot.forEach((doc) => {
         this.specialServices.push(doc.data())
-        console.log(doc.data())
+        // console.log(doc.data())
       })
     },
+
   },
   beforeMount() {
     this.getOrdiantions()

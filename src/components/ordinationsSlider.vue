@@ -1,6 +1,6 @@
 <template>
     <Splide :options="splide" class="splide">
-        <SplideSlide class="splide__track flex justify-center" v-for="(ordination,i) in ordinations" :key="i" >
+        <SplideSlide class="splide__track flex justify-center" v-for="(ordination,i) in ordinations" :key="i">
                 <ul class="splide__list flex flex-row w-[650px] bg-[#385B97] rounded-md">
                     <li class="splide__slide flex flex-col items-center justify-between pt-8 md:pt-12 pb-16 md:pb-12 w-full">
                         <div class="text-3xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16">{{ ordination.name }}</div>
@@ -16,6 +16,7 @@
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css';
+import { store } from '../store'
 
 export default {
     name: 'OrdinationsSlider',
@@ -26,6 +27,7 @@ export default {
     },
     data() {
         return {
+            store,
             splide: {
                 type: 'loop',
                 width: '50%',

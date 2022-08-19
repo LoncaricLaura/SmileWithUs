@@ -6,7 +6,7 @@
 <template>
   <div class="flex flex-col justify-between h-screen">
     <AppHeader />
-    <router-view/>
+    <router-view />
     <AppFooter  />
   </div>
 </template>
@@ -14,12 +14,44 @@
 <script>
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
+import { onAuthStateChanged, getAuth } from 'firebase/auth'
+import { store } from './store'
+import router from "./router";
+
+const auth = getAuth()
+//monitoring the user's login status
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+        const isAdmin = localStorage.getItem('isAdmin')
+        localStorage.setItem('checkLogedUser', user.email)
+        localStorage.setItem('currentUid', user.uid)
+        store.state.currentUserEmail = user.email
+        store.state.currentName = user.displayName
+        store.state.currentUid = user.uid
+        if (isAdmin === 'admin') {
+            router.push({ path: '/adminscreen' })
+            }
+    } else {
+        store.state.currentUserEmail = null
+        store.state.currentName = null
+        store.state.userRole = null
+        localStorage.clear()
+    }
+})
+
+
+              
 
 export default {
+  data() {
+    return {
+      store,
+    }
+  },
   components: {
     AppHeader,
     AppFooter
-  }
+  },
 }
 </script>
 

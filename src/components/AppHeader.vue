@@ -8,7 +8,15 @@
         "
     >
         <div class="flex items-top lg:items-center pt-6 lg:pt-0" >
-            <router-link to="/">
+            <router-link to="/" v-if="this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'">
+                <p
+                    class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
+                    :class="[open ? 'text-[white]' : '']"
+                >
+                    SmileWithUs
+                </p>
+            </router-link>
+            <router-link to="/adminscreen" v-if="this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist'">
                 <p
                     class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
                     :class="[open ? 'text-[white]' : '']"
@@ -80,13 +88,18 @@
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
-                <router-link to="/" @click="closeMenu" v-if="store.state.currentUserEmail"
+                <router-link to="/" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'" 
                     >Dental offices 
                 </router-link>
 
-                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail"
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'"
                     >Special services</router-link
                 >
+        	    <router-link to="/adminscreen" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && store.state.userRole === true"
+                    >Appointments</router-link
+                >
+            </div>
+            <div v-if="store.state.currentUserEmail">
             </div>
             <div class="flex flex-col lg:flex-row items-end lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
                 <router-link to="/signup" @click="closeMenu" v-if="!store.state.currentUserEmail" class="hover:font-bold text-[#1B3B73] lg:text-white bg-white lg:bg-[#1B3B73] py-2 px-4 rounded-full"
@@ -110,32 +123,16 @@
                 </div>
             </div>
         </div>
-        
-         <!-- <div class="hidden md:flex items-center text-xl md:text-2xl text-slate-700 font-bold pl-12 w-1/5" v-if="store.state.currentName">
-            Hi, {{ store.state.currentName }}
-          </div> -->
+
     </div>
 </template>
 
 <script>
 import { db } from '../firebase'
 import { store } from '../store'
-import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth'
+import { signOut, getAuth } from 'firebase/auth'
 
 const auth = getAuth()
-//monitoring the user's login status
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        store.state.currentUserEmail = user.email
-        localStorage.setItem('checkLogedUser', store.state.currentUserEmail)
-        store.state.currentName = user.displayName
-        store.state.currentUid = user.uid
-    } else {
-        store.state.currentUserEmail = null
-        store.state.currentName = null
-        localStorage.clear()
-    }
-})
 
 export default {
     name: 'AppHeader',
@@ -160,13 +157,17 @@ export default {
         signout() {
             signOut(auth)
                 .then(() => {
-                    this.$router.replace({ name: '/' })
+                    store.state.userRole = null
+                    this.$router.replace({ path: '/' })
+                    localStorage.clear()
                 })
                 .catch((error) => {
                     console.log(error)
                 })
         },
+
     },
+
 }
 </script>
 

@@ -9,7 +9,13 @@
         <div class="text-lg md:text-xl md:text-4xl text-left text-[#385B97] pt-12">For more information contact us 
             <a :href="`tel:${contact}`" class="text-lg md:text-xl md:text-4xl text-left text-[#385B97] pt-12 hover:underline">{{ contact }}</a>
         </div>
+        <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
     </div>
+    <Loading
+        :active="isLoading"
+        :is-full-page="fullPage"
+        :loader="loader"
+    />
     <div class="px-6 sm:px-12 md:px-24 lg:px-32">
         <AboutOrdination v-for="service in services" :key="service.id" :serviceName="service.name" :desc="service.description" :usage="service.usage" :process="service.process" :prostheses="service.prostheses" :crowns="service.crowns" :bridges="service.bridges" :image="service.image" />
     </div>
@@ -25,18 +31,24 @@ import {
 } from 'firebase/firestore'
 import { store } from '../store'
 import AboutOrdination from '/src/components/AboutOrdination.vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
-    name: 'OrdinationScreen',
+    name: 'ordinationScreen',
     props: ["name", "doctor", "id", "contact"],
     data() {
         return {
             services: [],
-            store
+            store,
+            isLoading: false,
+            fullPage: true,
+            loader: 'spinner',
         }
     },
     components: {
-        AboutOrdination
+        AboutOrdination,
+        Loading
     },
     methods: {
         async getServices() {
@@ -45,12 +57,21 @@ export default {
                 snapshot.docChanges().forEach((change) => {
                     this.services.push(change.doc.data())
                     console.log(this.services)
+                    this.isLoading = false
                 })
             })
+            this.isLoading = true
         },
+        goBack() {
+          return this.$router.go(-1)
+        },
+
     },
     beforeMount() {
-        this.getServices()
+        //this.getServices()
+        setTimeout(() => {
+            this.getServices()
+        }, 1000)
     }
 }
 </script>
