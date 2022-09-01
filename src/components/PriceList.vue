@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div v-show="open">
         <div class="flex justify-center w-full h-[350px] bg-[url('/src/assets/ordinationScreen/background.jpeg')] bg-cover bg-bottom bg-opacity-75 px-6 md:px-24 lg:px-32">
             <div class="flex flex-col pt-24 w-full">
                 <div class="flex self-center text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-8">Price list</div>
-                <div class="flex self-center text-3xl md:text-4xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-4">Free first review for every service</div>
+                <div class="flex self-center text-3xl md:text-4xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-4">The first examination is free for every service</div>
                 <div class="flex self-center text-lg md:text-xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97]">All prices are determined in agreement with the patient after the examination</div>
-                <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
+                <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="$emit('close')" />
             </div>
         </div>
         <Loading
@@ -20,11 +20,11 @@
                     <th class="w-1/2 text-start">Price</th>
                 </thead>
                 <div v-for="price in prices" :key="price.id" :name="price.name" :price="price.price" class="flex flex-row justify-between pb-2 space-x-4">
-                <tbody class="flex bg-[#EFF4FC] text-lg px-4 py-3 w-full">
-                    <td class="w-1/2">
+                <tbody class="flex bg-[#EFF4FC] text-lg px-4 py-3 w-full transition-all duration-500 ease-out hover:scale-[1.05]">
+                    <td class="w-1/2 cursor-default">
                         <tr>{{ price.name }}</tr>
                     </td>
-                    <td>
+                    <td class="cursor-default">
                         <tr>{{ price.price }}</tr>
                     </td>
                     </tbody>
@@ -46,8 +46,13 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
-    name: 'priceList',
-    props: ["id"],
+    name: 'PriceList',
+    props: {
+        open: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
             prices: [],
@@ -62,11 +67,11 @@ export default {
     },
     methods: {
         async getPriceList() {
-            const q = query(collection(db, `ordinations/${this.id}/priceList`))
+            const q = query(collection(db, `ordinations/${store.state.ordinationIdSlider}/priceList`))
             onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     this.prices.push(change.doc.data())
-                    console.log(this.prices)
+                    //console.log(this.prices)
                     this.isLoading = false
                 })
             })

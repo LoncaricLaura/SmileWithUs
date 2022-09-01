@@ -7,9 +7,11 @@ import chooseOrdination from '/src/views/chooseOrdination.vue'
 import chooseService from '/src/views/chooseService.vue'
 import chooseAppointment from '/src/views/chooseAppointment.vue'
 import sucessOrder from '/src/views/sucessOrder.vue'
-import priceList from '/src/views/priceList.vue'
 import adminScreen from '/src/views/adminScreen.vue'
 import appointmentsList from '/src/views/appointmentsList.vue'
+import newOrders from '/src/views/newOrders.vue'
+import editOrder from '/src/views/editOrder.vue'
+
 
 import { store } from '../store'
 
@@ -63,13 +65,6 @@ const routes = [
         meta: { title: 'SuccessOrder | SmileWithUs' }
     },
     {
-        path: '/ordination/:name/priceList',
-        name: 'priceList',
-        component: priceList,
-        props: true,
-        meta: { title: 'PriceList | SmileWithUs' }
-    },
-    {
         path: '/adminscreen',
         name: 'adminScreen',
         component: adminScreen,
@@ -82,6 +77,20 @@ const routes = [
         component: appointmentsList,
         props: true,
         meta: { title: 'List of appointments | SmileWithUs' }
+    },
+    {
+        path: '/neworders',
+        name: 'neworders',
+        component: newOrders,
+        props: true,
+        meta: { title: 'New orders | SmileWithUs' }
+    },
+    {
+        path: '/editorder/:title',
+        name: 'editorder',
+        component: editOrder,
+        props: true,
+        meta: { title: 'Edit order | SmileWithUs' }
     },
 
 ]

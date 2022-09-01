@@ -1,81 +1,173 @@
 <template>
-    <div class="flex flex-row pt-32 pb-16 px-32 h-full">
-        <div class="space-y-4 pr-6">
-            <div class="flex flex-col external-event cursor-pointer"
-                v-for="(item, i) in draggables"
-                :key="i"
-                draggable="true"
-                @dragstart="onEventDragStart($event, item)">
-                <strong>{{ item.title }}</strong>
-                ({{ item.duration ? `${item.duration} min` : 'no duration' }})
-                <div>{{ item.content }}</div>
-            </div>
-        </div>
-        <vue-cal small
-            hide-view-selector
-            hide-weekends
-            :disable-views="['years', 'year', 'week']"
-            :time-from="9 * 60"
-            :time-to="16 * 60"
-            editable-events
-            @event-drop="onEventDrop">
-        </vue-cal>
+    <div class="pt-24 pb-16 px-32" :class="[isOpen ? 'blur-lg' : '']">
+      <button @click="isOpen = true" class="flex mb-4 ml-auto justify-center bg-gray-700 text-white px-3 py-2 w-24 font-display hover:bg-gray-900 rounded-md">Add</button>
+        <FullCalendar 
+            v-bind:options="calendarOptions"
+        />
     </div>
+    <div class="absolute w-full h-full"  @close="isOpen = !IsOpen" :class="isOpen ? 'flex' : 'hidden'">
+            <div class="flex flex-col justify-content-center mx-auto mt-44 w-[350px] h-[400px] sm:w-[400px] sm:h-[600px] lg:w-[700px] lg:h-[550px] rounded-xl shadow-2xl bg-white">
+                <form class="space-y-10 w-full p-12">
+                    <div class="flex flex-col items-start">
+                        <div
+                            class="text-lg font-bold text-[#244B8E] pb-2"
+                        >
+                            Full name
+                        </div>
+                        <input
+                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-md"
+                            type="text"
+                            v-model="title"
+                            placeholder="Name Surname"
+                            required
+                        />
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <div class="flex justify-between items-center">
+                            <div
+                                class="text-lg font-bold text-[#244B8E] pb-2"
+                            >
+                                Service
+                            </div>
+                        </div>
+                        <input
+                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-md"
+                            type="text"
+                            v-model="service"
+                            placeholder="Teeth repair"
+                            required
+                        />
+                    </div>
+                <div class="grid justify-items-start my-8 ">
+                    <div class="text-md text-black-900 text-left border-b w-full">
+                       <p class="pb-[5px]">DATE:</p> 
+                      <Datepicker v-model="date" :format="'yyyy-dd-M HH:mm'" :minDate="new Date()" :maxDate="this.maxDate" :disabledWeekDays="[7, 0]" :enableTimePicker="true" placeholder="Select Date" class="cursor-pointer w-full lg:w-1/2 xl:w-full"  />
+
+                    </div>
+                </div>
+                    <div class="mt-10">
+                        <button
+                            type="button"
+                            @click="addNewOrder(isOpen = false)"
+                            :disabled="
+                                title && service && start === ''
+                            "
+                            class="bg-[#385B97] text-white p-4 w-1/3  font-semibold font-display hover:bg-[#244B8E] rounded-full"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </form>
+                <div class="flex justify-end order-first m-4 cursor-pointer">
+                  <button type="button" @click="isOpen = false">
+                      <img src="/src/assets/close.png" class="h-[25px]" />
+                  </button>
+            </div>
+</div>
+    </div>
+            
 </template>
 
 <script>
-import VueCal from 'vue-cal'
-import 'vue-cal/dist/vuecal.css'
+import { ref } from 'vue'
+import '@fullcalendar/core/vdom'
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction'
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { getMonth, getYear, subMonths, addMonths } from 'date-fns';
+import { onSnapshot, collection, query, where, setDoc, doc } from 'firebase/firestore'
+import { db } from '../firebase'
+import { store } from '../store'
 
+const id = ref(10)
 export default {
     name: 'appointmentsList',
-    props: [ "name" ],
     components: {
-        VueCal
+        //VueCal
+        FullCalendar,
+        Datepicker
     },
-      data: () => ({
-    draggables: [
-      {
-        // The id (or however you name it), will help you find which event to delete
-        // from the callback triggered on drop into Vue Cal.
-        id: 1,
-        title: 'Ext. Event 1',
-        content: 'content 1',
-        duration: 60
+    data: () => ({
+    events: [],
+    store,
+    title: '',
+    service: '',
+    date: new Date().setHours(0, 0, 0),
+    maxDate: addMonths(new Date(getYear(new Date()), getMonth(new Date())), 3),
+    isOpen: false,
+    calendarOptions: {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev today next',
+        center: '',
+        right: 'dayGridMonth, dayGridWeek, listDay'
       },
-      {
-        id: 2,
-        title: 'Ext. Event 2',
-        content: 'content 2',
-        duration: 30
-      },
-      {
-        id: 3,
-        title: 'Ext. Event 3',
-        content: 'content 3'
-        // No defined duration here: will default to 2 hours.
-      }
-    ]
+      editable: true,
+      selectable: true,
+      weekends: true,
+      events: [],
+    },
+
   }),
     methods: {
-    onEventDragStart (e, draggable) {
-      // Passing the event's data to Vue Cal through the DataTransfer object.
-      e.dataTransfer.setData('event', JSON.stringify(draggable))
-      e.dataTransfer.setData('cursor-grab-at', e.offsetY)
-    },
-    // The 3 parameters are destructured from the passed $event in @event-drop="onEventDrop".
-    // `event` is the final event as Vue Cal understands it.
-    // `originalEvent` is the event that was dragged into Vue Cal, it can come from the same
-    //  Vue Cal instance, another one, or an external source.
-    // `external` is a boolean that lets you know if the event is not coming from any Vue Cal.
-    onEventDrop ({ event, originalEvent, external }) {
-      // If the event is external, delete it from the data source on drop into Vue Cal.
-      // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
-      if (external) {
-        const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
-        if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
-      }
-    }
+      async getOrders() {
+        const q = query(collection(db, `ordinations/${store.state.adminOrdiantionId}/orders`),where("time","!=",""));
+        onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            this.calendarOptions.events.push(change.doc.data());
+        });
+        console.log(this.calendarOptions.events);
+        
+          });
+      },
+      getSelectedTime(time) {
+        time = this.date.toString().split(' ')
+        return time[4]
+      },
+      getSelectedDate(date) {
+        date = this.date.toString().split(' ')
+        date[1] = ("0" + (this.date.getMonth() + 1)).slice(-2)
+        return date[3] + '-' + date[1] + '-' + date[2]
+      },
+      async addNewOrder() {
+        await setDoc(
+          doc(
+            db,
+            `ordinations/${store.state.adminOrdiantionId}/orders/${this.title}`
+            ),
+            {
+              title: this.title,
+              service: this.service,
+              start: this.getSelectedDate(this.date) + ' ' + this.getSelectedTime(this.date),
+              time: this.getSelectedTime(this.date)
+            }
+          )
+      },
+      goBack() {
+        return this.$router.go(-1)
+      },
+  },
+  beforeMount() {
+    this.getOrders()
   }
 }
 </script>
+
+<style>
+.fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  color: #385B97;
+}
+.fc {
+height: 800px;
+}
+:root {
+  --fc-border-color: #bac9e3;
+  --fc-daygrid-event-dot-width: 5px;
+}
+</style>

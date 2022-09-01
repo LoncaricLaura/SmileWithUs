@@ -23,11 +23,14 @@ const auth = getAuth()
 onAuthStateChanged(auth, (user) => {
   if (user) {
         const isAdmin = localStorage.getItem('isAdmin')
+        const ordinationId = localStorage.getItem('ordinationId')
         localStorage.setItem('checkLogedUser', user.email)
         localStorage.setItem('currentUid', user.uid)
         store.state.currentUserEmail = user.email
         store.state.currentName = user.displayName
         store.state.currentUid = user.uid
+        store.state.adminOrdiantionId = ordinationId
+        console.log(store.state.adminOrdiantionId)
         if (isAdmin === 'admin') {
             router.push({ path: '/adminscreen' })
             }

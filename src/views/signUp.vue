@@ -155,7 +155,7 @@ export default {
             passwordRepeat: '',
             isLoading: false,
             fullPage: true,
-            loader: 'dots',
+            loader: 'spinner',
         }
     },
     components: {
@@ -171,47 +171,6 @@ export default {
                     store.state.currentName = this.fullName
                     console.log(user)
 
-                    // Check if user meets role criteria.
-                   /* if (
-                        user.email &&
-                        user.email.endsWith('@admin.com')
-                    ) {
-                        setDoc(doc(db, 'admins', uid), {
-                            fullName: this.fullName,
-                            identification: this.identification,
-                            email: user.email,
-                            admin: true
-                        })
-                    }
-                    else {
-                        setDoc(doc(db, 'users', uid), {
-                            fullName: this.fullName,
-                            identification: this.identification,
-                            email: user.email,
-                            admin: false
-                        })
-                        }
-                    this.isLoading = false
-                    console.log('Reg Success! Email: ' + user.email)
-                })
-                .then(() => {
-                    // for updating profile on signup
-                    updateProfile(autho.currentUser, {
-                        displayName: this.fullName,
-                    })
-                    if (autho.currentUser && autho.currentUser.email.endsWith('@admin.com')) {
-                        this.$router.replace({ path: '/adminScreen' })
-                    }
-                    else {
-                        this.$router.replace({ path: '/' })
-                    }
-                })
-                .catch((e) => {
-                    console.error(e.message)
-                    alert(e.message)
-                    store.currentName = null
-                })
-                this.isLoading = true */
                     // add new user in document with uid from auth
                     setDoc(doc(db, 'users', uid), {
                         fullName: this.fullName,

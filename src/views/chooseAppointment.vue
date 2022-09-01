@@ -7,7 +7,7 @@
             <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
         </div>
         <div class="flex justify-center w-full px-6 md:px-32 py-6 md:py-12">
-            <Datepicker v-model="date" :minDate="new Date()" :maxDate="this.maxDate" :disabledWeekDays="[7, 0]" :enableTimePicker="false" placeholder="Select Date" class="cursor-pointer w-full lg:w-1/2 xl:w-1/3 "  />
+            <Datepicker v-model="date" :format="'yyyy-dd-M'" :minDate="new Date()" :maxDate="this.maxDate" :disabledWeekDays="[7, 0]" :enableTimePicker="false" placeholder="Select Date" class="cursor-pointer w-full lg:w-1/2 xl:w-1/3 "  />
         </div>
             <router-link to="/sucessOrder" @click="setOrder()" :disabled="date == ''" class="mx-auto bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full mt-16 cursor-pointer">
                 Place an order
@@ -16,10 +16,9 @@
 </template>
 
 <script>
-//import Datepicker from 'vue3-datepicker'
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { getMonth, getYear, subMonths, addMonths } from 'date-fns';
+import { getMonth, getYear, addMonths } from 'date-fns';
 import {
     setDoc,
     doc
@@ -40,9 +39,14 @@ export default {
         }
     },
     methods: {
+        getMonthFromString(mon){
+            month = (new Date.parse(mon +" 1, 2012")).getMonth()+1
+            return month
+        },
         getSelectedDate(date) {
             date = this.date.toString().split(' ')
-            return date[2] + ' ' + date[1] + ' ' + date[3]
+            date[1] = ("0" + (this.date.getMonth() + 1)).slice(-2)
+            return date[3] + '-' + date[1] + '-' + date[2]
         },
         async setOrder() {
             store.state.selectedDate = this.getSelectedDate(this.date)
@@ -53,9 +57,10 @@ export default {
                     `ordinations/${store.state.selectedOrdinationId}/orders/${store.state.currentName}`
                 ),
                 {
-                    name: store.state.currentName,
+                    title: store.state.currentName,
                     service: store.state.selectedService,
-                    date: this.getSelectedDate(this.date),
+                    start: this.getSelectedDate(this.date),
+                    time: ''
                 }
             )
         },
@@ -65,7 +70,12 @@ export default {
     },
     beforeMount() {
         this.setOrder()
-    }
+    },
+    computed: {
+        isoDate() {
+            return new Date(this.s.expierDate).toISOString().substr(0,10);
+  }
+}
    /*setup() {
         const date = new Date()
         return {

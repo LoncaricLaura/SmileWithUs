@@ -7,8 +7,13 @@
                 : ''
         "
     >
+    <loading
+        :active="isLoading"
+        :is-full-page="fullPage"
+        :loader="loader"
+    />
         <div class="flex items-top lg:items-center pt-6 lg:pt-0" >
-            <router-link to="/" v-if="this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'">
+            <router-link to="/" v-if="this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'">
                 <p
                     class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
                     :class="[open ? 'text-[white]' : '']"
@@ -16,7 +21,7 @@
                     SmileWithUs
                 </p>
             </router-link>
-            <router-link to="/adminscreen" v-if="this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist'">
+            <router-link to="/adminscreen" v-if="this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/neworders' || this.$route.name === 'editorder'">
                 <p
                     class="text-3xl md:text-4xl font-extrabold text-[#244B8E] italic"
                     :class="[open ? 'text-[white]' : '']"
@@ -82,22 +87,31 @@
             </button>
         </div>
         <div
-            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-24 lg:pt-0 lg:flex text-xl font-bold text-white lg:text-[#244B8E] text-end items-end lg:items-center"
+            class="flex flex-col lg:flex-row w-full lg:justify-end lg:space-x-12 pt-16 lg:pt-0 lg:flex text-xl font-bold text-white lg:text-[#244B8E] text-end items-end lg:items-center"
             :class="open ? 'block ' : 'hidden'"
         >
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-6 lg:pb-0"
             >
-                <router-link to="/" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'" 
+                <!--<router-link to="/" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'" 
                     >Dental offices 
-                </router-link>
+                </router-link>-->
 
-                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist'"
-                    >Special services</router-link
+                <router-link to="/" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path !== '/' && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'"
+                    >Home</router-link
                 >
-        	    <router-link to="/adminscreen" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && store.state.userRole === true"
+                <router-link to="/chooseordination" class="hover:font-bold" @click="closeMenu" v-if="open && store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'"
+                    >Book an appoitment</router-link
+                >
+        	    <router-link to="/appointmentslist" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/neworders' || this.$route.name === 'editorder'"
                     >Appointments</router-link
                 >
+                <router-link to="/neworders" class="hover:font-bold" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/neworders' || this.$route.name === 'editorder'"
+                    >New orders
+                    <img src="/src/assets/notification.png" class="absolute flex right-72 top-8 h-4 animate-pulse" :class="[store.state.numberOfNewOrders > 0 && !open ? 'flex' : 'hidden' ]">
+                    </router-link
+                >
+  
             </div>
             <div v-if="store.state.currentUserEmail">
             </div>
@@ -115,11 +129,17 @@
                 >
                 <div
                     v-if="store.state.currentUserEmail"
-                    class=" pl-2 cursor-pointer"
+                    class="pl-2 cursor-pointer"
                     :class="[open ? 'text-white' : 'text-[#1B3B73]']"
                     @click="signout()"
                 >
                     Log out
+                </div>
+                <div
+                    v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'"
+                    class="flex flex-col cursor-default"
+                >
+                    <img src="/src/assets/profile.png" class="ml-auto w-12">
                 </div>
             </div>
         </div>
@@ -131,6 +151,8 @@
 import { db } from '../firebase'
 import { store } from '../store'
 import { signOut, getAuth } from 'firebase/auth'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 const auth = getAuth()
 
@@ -142,7 +164,13 @@ export default {
             store,
             users: [],
             visible: false,
+            isLoading: false,
+            fullPage: true,
+            loader: 'spinner',
         }
+    },
+    components: {
+        Loading
     },
     firestore: {
         users: db.collection('users'),
@@ -154,16 +182,21 @@ export default {
         toggle() {
             this.open = !this.open
         },
+        openLogout() {
+            this.open = !this.open
+        },
         signout() {
             signOut(auth)
                 .then(() => {
                     store.state.userRole = null
                     this.$router.replace({ path: '/' })
                     localStorage.clear()
+                    this.isLoading = false
                 })
                 .catch((error) => {
                     console.log(error)
                 })
+                this.isLoading = true
         },
 
     },

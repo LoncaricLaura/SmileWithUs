@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="flex flex-col xl:flex-row items-center md:items-end py-16 md:py-32 space-x-24 lg:space-x-32 space-y-24 lg:space-y-0 px-12 md:px-24 lg:px-32">
-      <div class="flex flex-col items-start text-left w-full xl:w-1/2">
+      <div class="flex flex-col items-start text-left w-full xl:w-1/2 ">
         <div class="text-3xl sm:text-4xl text-slate-600 font-bold pb-2 border-b-2 border-[#244B8E] w-32">About</div>
         <div class="text-xl sm:text-2xl text-slate-600 pt-8 leading-9">We offer dental practices with top teams of experts with many years of experience. Our offices provide superior services using the highest quality materials. Choose your dental practice and place an order. Achieve a healthy and radiant smile with the best care.</div>
       </div>
@@ -77,7 +77,6 @@ export default {
     }
   },
   components: {
-    //OrdinationCard,
     SpecialServicesCard,
     OrdinationsSlider
   },
@@ -96,7 +95,6 @@ export default {
         // console.log(doc.data())
       })
     },
-
   },
   beforeMount() {
     this.getOrdiantions()

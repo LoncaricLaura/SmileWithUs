@@ -80,7 +80,7 @@ import { store } from '../store'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import { onSnapshot, doc, getDocs, collection } from '@firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../firebase' 
 
 export default {
     name: 'logIn',
@@ -91,7 +91,7 @@ export default {
             error: '',
             isLoading: false,
             fullPage: true,
-            loader: 'dots',
+            loader: 'spinner',
             store,
             userDetails: []
         }
@@ -109,6 +109,7 @@ export default {
                     this.userDetails = doc.data()
                     localStorage.setItem('isAdmin', this.userDetails.isAdmin);
                     localStorage.setItem('ordinationId', this.userDetails.ordination_id);
+                    store.state.adminOrdiantionId = this.userDetails.ordination_id
                     store.state.userRole = this.userDetails.isAdmin
 
                 if (store.state.userRole === 'admin') {
@@ -123,11 +124,11 @@ export default {
                 .then(() => {
                     this.isLoading = false
                 })
-
                 .catch((e) => {
                     console.log('Error:', e.message)
                     this.password = ''
                     this.error = 'Error: Wrong password or email!'
+                    this.isLoading = false
                 })
                 this.isLoading = true
                 
