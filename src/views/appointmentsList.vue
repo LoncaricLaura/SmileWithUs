@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-24 pb-16 px-32" :class="[isOpen ? 'blur-lg' : '']">
+    <div class="pt-24 pb-16 mx-6 sm:px-16 md:px-32" :class="[isOpen ? 'blur-lg' : '']">
       <button @click="isOpen = true" class="flex mb-4 ml-auto justify-center bg-gray-700 text-white px-3 py-2 w-24 font-display hover:bg-gray-900 rounded-md">Add</button>
         <FullCalendar 
             v-bind:options="calendarOptions"
