@@ -14,22 +14,22 @@
         <div
             class="flex items-top lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8 pb-4 lg:pb-0 text-slate-200 text-xl text-left mt-3"
         >
-            <div class="flex flex-col space-y-4 items-end"  v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/activeorders' && this.$route.name !== 'editorder'">
+            <div class="flex flex-col space-y-4 items-end"  v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'">
                 <div class="flex flex-row space-x-4">
                     <p class="font-bold text-slate-100">Email:</p>
                     <a href="mailto:smilewithus@gmail.com" class="hover:underline">smilewithus@gmail.com</a>
                 </div>
-                <div class="flex flex-row space-x-4 text-slate-200 text-xl text-left"  v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/activeorders' && this.$route.name !== 'editorder'">
+                <div class="flex flex-row space-x-4 text-slate-200 text-xl text-left"  v-if="store.state.currentUserEmail && this.$route.path !== '/adminscreen' && this.$route.path !== '/appointmentslist' && this.$route.path !== '/neworders' && this.$route.name !== 'editorder'">
                     <div class="font-bold text-slate-100">Working hours:</div>
                     <div>Mon - Sat: 08:00 - 16:00</div>
                     <div>Sun: closed</div>
                 </div> 
             </div>
    
-            <router-link to="/appointmentslist" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/activeorders' || this.$route.name === 'editorder'"
+            <router-link to="/appointmentslist" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/neworders' || this.$route.name === 'editorder'"
             >Appointments</router-link
         >
-            <router-link to="/neworders" @click="closeMenu" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/activeorders' || this.$route.name === 'editorder'"
+            <router-link to="/neworders" v-if="store.state.currentUserEmail && this.$route.path === '/adminscreen' || this.$route.path === '/appointmentslist' || this.$route.path === '/neworders' || this.$route.name === 'editorder'"
             >New orders
             </router-link
             >

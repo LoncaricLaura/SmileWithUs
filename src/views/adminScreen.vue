@@ -13,10 +13,10 @@
             </router-link>
             </div>
         </div>
-        <div class="flex flex-col xl:flex-row items-center md:items-end py-16 md:py-32 space-x-24 lg:space-x-32 space-y-24 lg:space-y-0 px-12 md:px-24 lg:px-32" v-for="info in data" :key="info.id">
+        <div class="flex flex-col xl:flex-row items-center md:items-end py-16 md:py-32 space-x-24 lg:space-x-32 space-y-24 lg:space-y-0 px-12 md:px-24 lg:px-32">
             <div class="flex flex-col items-start text-left w-full xl:w-1/2">
                 <div class="text-3xl sm:text-4xl text-slate-600 font-bold pb-2 border-b-2 border-[#244B8E] w-32">Info</div>
-                <div class="text-xl sm:text-2xl text-slate-600 pt-8 leading-9 italic font-bold">{{ info.doctor }}</div>
+                <div class="text-xl sm:text-2xl text-slate-600 pt-8 leading-9 italic font-bold">{{  }}</div>
                 <div class="text-xl sm:text-2xl text-slate-600 pt-8 leading-9">Look at the schedule of agreed appointments</div>
             </div>
         </div>
@@ -59,8 +59,8 @@ export default {
       }
     },
     beforeMount() {
-    this.getOrders()
-    this.getOrdinationInfo()
+        this.getOrders()
+        this.getOrdinationInfo()
   }
 }
 </script>

@@ -60,7 +60,8 @@ export default {
                     title: store.state.currentName,
                     service: store.state.selectedService,
                     start: this.getSelectedDate(this.date),
-                    time: ''
+                    time: '',
+                    email: store.state.currentUserEmail
                 }
             )
         },

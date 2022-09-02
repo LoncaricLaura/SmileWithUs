@@ -6,8 +6,8 @@
             <div class="text-3xl md:text-4xl text-left italic text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-12">{{ doctor }}</div>
             <button class="text-lg text-[#EFF4FC] tracking-wide font-bold cursor-pointer bg-[#385B97] hover:bg-[#244B8E] py-2 px-4 rounded-full" @click="isOpen = true">Price List</button>
         </div>
-        <div class="text-lg md:text-xl md:text-4xl text-left text-[#385B97] pt-12">For more information contact us 
-            <a :href="`tel:${contact}`" class="text-lg md:text-xl md:text-4xl text-left text-[#385B97] pt-12 hover:underline">{{ contact }}</a>
+        <div class="text-lg md:text-xl md:text-2xl text-left text-[#385B97] pt-12">For more information contact us 
+            <a :href="`tel:${contact}`" class="text-lg md:text-xl md:text-2xl text-left text-[#385B97] pt-12 hover:underline">{{ contact }}</a>
         </div>
         <img src="/src/assets/backarrow.svg" class="flex self-start w-8 cursor-pointer" @click="goBack()"/>
     </div>

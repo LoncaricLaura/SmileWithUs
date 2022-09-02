@@ -1,9 +1,9 @@
 <template>
     <div
-        class="mx-auto flex flex-col mt-36 w-[350px] h-[400px] sm:w-[400px] sm:h-[600px] lg:w-[750px] lg:h-[550px] rounded-3xl shadow-2xl " 
+        class="mx-auto flex flex-col mt-36 w-[350px] h-[450px] sm:w-[400px] sm:h-[650px] lg:w-[750px] lg:h-[600px] rounded-3xl shadow-2xl " 
     >
         <div class="mx-auto max-w-md w-full space-y-8 px-4 sm:px-0">
-            <h2 class=" text-left text-3xl font-bold text-[#385B97] pb-7">
+            <h2 class="text-left text-3xl font-bold text-[#385B97] pb-4">
                 Confirm order
             </h2>
             <div class="mt-12">
@@ -17,6 +17,11 @@
                 <div class="flex mt-8">
                     <div class="text-md text-left text-black-900 border-b w-full pb-4">
                         SERVICE: <b>{{ service }}</b>
+                    </div>
+                </div>
+                <div class="flex mt-8">
+                    <div class="text-md text-left text-black-900 border-b w-full pb-4">
+                        EMAIL: <b>{{ email }}</b>
                     </div>
                 </div>
                 <div class="flex flex-row gap-5 w-full">
@@ -72,10 +77,11 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db } from '../firebase'
 import { doc, setDoc, Timestamp } from "firebase/firestore"; 
 import { store } from '../store'
+import emailjs from '@emailjs/browser'
 
 export default {
     name: "editOrder",
-    props: ["title", "service", "start"],
+    props: ["title", "service", "start", "email"],
     data() {
         return {
             time: Timestamp,
@@ -96,9 +102,30 @@ export default {
                     title: this.title,
                     service: this.service,
                     start: this.start + ' ' + this.time,
-                    time: this.time
+                    time: this.time,
+                    email: this.email
                 }
             )
+            const templateParams = {
+                currentAdminName: store.state.currentAdminName,
+                title: this.title,
+                service: this.service,
+                start: this.start,
+                time: this.time,
+                email: this.email
+            }
+            await emailjs
+                .send(
+                    'service_wqgif9z', 'template_myfiyd7', templateParams, 'bHpqVlWLvmbQh6PAl'
+                )
+                .then(
+                    (res) => {
+                        console.log('The appointment is successfully scheduled!', res.status, res.text)
+                    },
+                    (e) => {
+                        alert('Failed! E-mail confirm not sent!')
+                    }
+                )
         }
     }
 }
