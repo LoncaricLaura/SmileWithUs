@@ -1,32 +1,46 @@
 <template>
     <div>
-        <div class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 lg:mx-32 xl:mx-72 mt-40 sm:mt-32 md:mt-36 lg:mt-44 h-[860px] sm:h-[930px] lg:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-2xl">
-        <loading
-            :active="isLoading"
-            :is-full-page="fullPage"
-            :loader="loader"
-        />
-            <div class="flex flex-col w-full lg:w-1/2  h-full bg-[#385B97] py-12 lg:pt-32 px-6 xl:px-24 lg:order-none rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+        <div
+            class="flex flex-col lg:flex-row justify-center items-center mx-4 sm:mx-24 lg:mx-32 xl:mx-72 mt-32 sm:mt-32 md:mt-36 lg:mt-44 h-[860px] sm:h-[930px] lg:h-[700px] shadow-[0_35px_77px_-15px_rgba(0,0,0,0.44)] rounded-md"
+        >
+            <loading
+                :active="isLoading"
+                :is-full-page="fullPage"
+                :loader="loader"
+            />
+            <div
+                class="flex flex-col w-full lg:w-1/2 h-full bg-[#385B97] py-12 lg:pt-32 px-6 xl:px-24 lg:order-none rounded-t-md lg:rounded-l-md lg:rounded-tr-none"
+            >
                 <p class="text-white text-3xl md:text-5xl">Sign up</p>
-                <p class="text-white text-lg md:text-2xl mt-4 md:mt-8">to use all features of the application</p>
-                <div class="mt-6 md:mt-12 text-sm font-display text-slate-100 text-center">Already have an account?
+                <p class="text-white text-lg md:text-2xl mt-4 md:mt-8">
+                    to use all features of the application
+                </p>
+                <div
+                    class="mt-6 md:mt-12 text-sm font-display text-slate-100 text-center"
+                >
+                    Already have an account?
                     <router-link to="/login"
-                    ><a class="cursor-pointer text-slate-100 hover:text-bold font-bold"
-                        >Log in</a
-                    ></router-link>
-                    </div>
-                <img src="/src/assets/teeth.png" class="hidden lg:flex mx-0 lg:mx-16 xl:px-24">
+                        ><a
+                            class="cursor-pointer text-slate-100 hover:text-bold font-bold"
+                            >Log in</a
+                        ></router-link
+                    >
+                </div>
+                <img
+                    src="/src/assets/teeth.png"
+                    class="hidden lg:flex mx-0 lg:mx-16 xl:px-24"
+                />
             </div>
-            <div class="flex w-full lg:w-1/2 px-4 sm:px-12 lg:px-16 xl:px-24 py-6 lg:py-0">
+            <div
+                class="flex w-full lg:w-1/2 px-4 sm:px-12 lg:px-16 xl:px-24 py-6 lg:py-0"
+            >
                 <form class="space-y-5 md:space-y-6 w-full">
                     <div class="flex flex-col items-start">
-                        <div
-                            class="text-lg font-bold text-[#244B8E] pb-2"
-                        >
+                        <div class="text-lg font-bold text-[#244B8E] pb-2">
                             Full name
                         </div>
                         <input
-                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-full"
+                            class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
                             type="email"
                             v-model="fullName"
                             placeholder="Name Surname"
@@ -34,13 +48,11 @@
                         />
                     </div>
                     <div class="flex flex-col items-start">
-                        <div
-                            class="text-lg font-bold text-[#244B8E] pb-2"
-                        >
+                        <div class="text-lg font-bold text-[#244B8E] pb-2">
                             Identification number
                         </div>
                         <input
-                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-full"
+                            class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
                             type="text"
                             v-model="identification"
                             placeholder="030345761795"
@@ -52,17 +64,16 @@
                             for="passwordWarning"
                             v-if="identification.length !== 11"
                             class="text-[#3D619E] text-sm font-display font-semibold mt-1"
-                            >Identification number must contain 11 character</label
+                            >Identification number must contain 11
+                            character</label
                         >
                     </div>
                     <div class="flex flex-col items-start">
-                        <div
-                            class="text-lg font-bold text-[#244B8E] pb-2"
-                        >
+                        <div class="text-lg font-bold text-[#244B8E] pb-2">
                             Email Address
                         </div>
                         <input
-                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-full"
+                            class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
                             type="email"
                             v-model="username"
                             placeholder="name@gmail.com"
@@ -72,14 +83,12 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="flex justify-between items-center">
-                            <div
-                                class="text-lg font-bold text-[#244B8E] pb-2"
-                            >
+                            <div class="text-lg font-bold text-[#244B8E] pb-2">
                                 Password
                             </div>
                         </div>
                         <input
-                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-full"
+                            class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
                             type="password"
                             v-model="password"
                             placeholder="Enter your password"
@@ -95,14 +104,12 @@
                     </div>
                     <div class="flex flex-col items-start">
                         <div class="flex justify-between items-center">
-                            <div
-                                class="text-lg font-bold text-[#244B8E] pb-2"
-                            >
+                            <div class="text-lg font-bold text-[#244B8E] pb-2">
                                 Retype password
                             </div>
                         </div>
                         <input
-                            class="w-full text-black text-md py-2 pl-2 border border-[#CCCCCC] rounded-full"
+                            class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
                             type="password"
                             v-model="passwordRepeat"
                             placeholder="Enter your password"
@@ -119,9 +126,10 @@
                             type="button"
                             @click="signup()"
                             :disabled="
-                                password !== passwordRepeat && password.length < 8
+                                password !== passwordRepeat &&
+                                password.length < 8
                             "
-                            class="bg-[#385B97] text-white p-4 w-full  font-semibold font-display hover:bg-[#244B8E] rounded-full mt-4"
+                            class="bg-[#385B97] text-white p-4 w-full font-semibold font-display hover:bg-[#244B8E] rounded-full mt-4"
                         >
                             Sign up
                         </button>
@@ -133,7 +141,7 @@
 </template>
 
 <script>
-import { db } from '../firebase' 
+import { db } from '../firebase'
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -159,7 +167,7 @@ export default {
         }
     },
     components: {
-        Loading
+        Loading,
     },
     methods: {
         signup() {
@@ -176,7 +184,7 @@ export default {
                         fullName: this.fullName,
                         identification: this.identification,
                         email: user.email,
-                        isAdmin: "user",
+                        isAdmin: 'user',
                     })
                     this.isLoading = false
                     console.log('Reg Success! Email: ' + user.email)
@@ -192,11 +200,9 @@ export default {
                     console.error(e.message)
                     alert(e.message)
                     store.currentName = null
-                }) 
-                this.isLoading = true
-                
-        }
-    }
+                })
+            this.isLoading = true
+        },
+    },
 }
 </script>
-

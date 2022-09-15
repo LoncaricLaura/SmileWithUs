@@ -11,7 +11,9 @@ import adminScreen from '/src/views/adminScreen.vue'
 import appointmentsList from '/src/views/appointmentsList.vue'
 import newOrders from '/src/views/newOrders.vue'
 import editOrder from '/src/views/editOrder.vue'
-
+import patientList from '/src/views/patientList.vue'
+import patientDetails from '/src/views/patientDetails.vue'
+import myOrders from '/src/views/myOrders.vue'
 
 import { store } from '../store'
 
@@ -25,74 +27,94 @@ const routes = [
         path: '/signup',
         name: 'signUp',
         component: signUp,
-        meta: { title: 'Sign up | SmileWithUs' }
+        meta: { title: 'Sign up | SmileWithUs' },
     },
     {
         path: '/login',
         name: 'logIn',
         component: logIn,
-        meta: { title: 'Login | SmileWithUs' }
+        meta: { title: 'Login | SmileWithUs' },
     },
     {
         path: '/ordination/:name',
         name: 'ordinationScreen',
         component: ordinationScreen,
         props: true,
-        meta: { title: 'Ordination | SmileWithUs' }
+        meta: { title: 'Ordination | SmileWithUs' },
     },
     {
         path: '/chooseordination',
         name: 'chooseOrdination',
         component: chooseOrdination,
-        meta: { title: 'ChooseOrdination | SmileWithUs' }
+        meta: { title: 'ChooseOrdination | SmileWithUs' },
     },
     {
         path: '/chooseservice',
         name: 'chooseService',
         component: chooseService,
-        meta: { title: 'ChooseService | SmileWithUs' }
+        meta: { title: 'ChooseService | SmileWithUs' },
     },
     {
         path: '/chooseappointment',
         name: 'chooseAppointment',
         component: chooseAppointment,
-        meta: { title: 'ChooseAppointment | SmileWithUs' }
+        meta: { title: 'ChooseAppointment | SmileWithUs' },
     },
     {
         path: '/sucessorder',
         name: 'sucessOrder',
         component: sucessOrder,
-        meta: { title: 'SuccessOrder | SmileWithUs' }
+        meta: { title: 'SuccessOrder | SmileWithUs' },
     },
     {
         path: '/adminscreen',
         name: 'adminScreen',
         component: adminScreen,
         props: true,
-        meta: { title: 'Admin | SmileWithUs' }
+        meta: { title: 'Admin | SmileWithUs' },
     },
     {
         path: '/appointmentslist',
         name: 'appointmentsList',
         component: appointmentsList,
         props: true,
-        meta: { title: 'List of appointments | SmileWithUs' }
+        meta: { title: 'List of appointments | SmileWithUs' },
     },
     {
         path: '/neworders',
         name: 'neworders',
         component: newOrders,
         props: true,
-        meta: { title: 'New orders | SmileWithUs' }
+        meta: { title: 'New orders | SmileWithUs' },
     },
     {
         path: '/editorder/:title',
         name: 'editorder',
         component: editOrder,
         props: true,
-        meta: { title: 'Edit order | SmileWithUs' }
+        meta: { title: 'Edit order | SmileWithUs' },
     },
-
+    {
+        path: '/patientlist',
+        name: 'patientList',
+        component: patientList,
+        props: true,
+        meta: { title: 'Patient list | SmileWithUs' },
+    },
+    {
+        path: '/patientdetails/:identification',
+        name: 'patientDetails',
+        component: patientDetails,
+        props: true,
+        meta: { title: 'Patient list | SmileWithUs' },
+    },
+    {
+        path: '/myorders',
+        name: 'myOrders',
+        component: myOrders,
+        props: true,
+        meta: { title: 'My orders | SmileWithUs' },
+    },
 ]
 
 const router = createRouter({
@@ -116,7 +138,6 @@ router.beforeEach((to) => {
     ) {
         return { path: '/' }
     }
-
-}) 
+})
 
 export default router

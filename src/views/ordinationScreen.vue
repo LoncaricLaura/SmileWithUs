@@ -1,8 +1,8 @@
 <template>
 <div :class="isOpen ? 'hidden' : 'flex flex-col'">
     <div class="flex flex-col justify-center items-center w-full h-[600px] lg:h-[550px] bg-[url('/src/assets/ordinationScreen/background.jpeg')] bg-cover bg-bottom bg-opacity-75 px-6 md:px-24 lg:px-32">
-        <div class="flex flex-col items-center pt-24">
-            <div class="text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-8 lg:pb-16 pt-12 md:pt-16 lg:pt-0">{{ name }}</div>
+        <div class="flex flex-col items-start sm:items-center pt-24">
+            <div class="text-5xl md:text-7xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-8 lg:pb-16 pt-6 md:pt-16 lg:pt-0">{{ name }}</div>
             <div class="text-3xl md:text-4xl text-left italic text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pb-12">{{ doctor }}</div>
             <button class="text-lg text-[#EFF4FC] tracking-wide font-bold cursor-pointer bg-[#385B97] hover:bg-[#244B8E] py-2 px-4 rounded-full" @click="isOpen = true">Price List</button>
         </div>

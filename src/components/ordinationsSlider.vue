@@ -1,10 +1,10 @@
 <template>
     <Splide :options="splide" class="splide">
         <SplideSlide class="splide__track flex justify-center" v-for="(ordination,i) in ordinations" :key="i">
-                <ul class="splide__list flex flex-row w-[650px] bg-[#385B97] rounded-md">
+                <ul class="splide__list flex flex-row flex-wrap w-screen md:w-[650px] bg-[#385B97] rounded-md">
                     <li class="splide__slide flex flex-col items-center justify-between pt-8 md:pt-12 pb-16 md:pb-12 w-full">
-                        <div class="text-3xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16">{{ ordination.name }}</div>
-                        <div class="text-2xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16 italic">{{ ordination.doctor }}</div>
+                        <div class="flex flex-wrap text-2xl sm:text-3xl text-slate-100 font-medium mx-6 sm:mx-8 md:mx-24 lg:mx-16">{{ ordination.name }}</div>
+                        <div class="text-xl sm:text-2xl text-slate-100 font-medium mx-6 sm:mx-16 md:mx-24 lg:mx-16 italic">{{ ordination.doctor }}</div>
                         <router-link :to="{ name: 'ordinationScreen', params: { name: ordination.name, doctor: ordination.doctor, id: ordination.id, contact: ordination.contact }, }" class="flex justify-center bg-slate-100 text-[#385B97] text-lg font-bold p-2 rounded-full w-[150px]">SEE MORE</router-link>
                     </li>
                 </ul>

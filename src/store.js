@@ -15,6 +15,7 @@ export const store = createStore({
         currentUserEmail: null,
         currentUid: null,
         currentName: null,
+        identification: null,
         selectedOrdinationId: null,
         selectedOrdination: '',
         selectedService: '',
@@ -24,8 +25,9 @@ export const store = createStore({
         adminOrdiantionId: null,
         numberOfNewOrders: null,
         ordinationIdSlider: null,
+        patientId: null,
     },
     mutations: {},
     actions: {},
-    getters: {}
-  });
+    getters: {},
+})
