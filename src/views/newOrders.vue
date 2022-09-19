@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-col sm:flex-row gap-6 py-8 sm:py-16">
             <div
-                class="flex flex-col justify-between items-center w-[280px] md:w-[400px] md:h-[250px] lg:h-[250px] bg-[#EFF4FC] rounded-md pt-8 pb-2 px-8 transition-all duration-500 ease-out hover:scale-[1.05] shadow-[0_25px_77px_-25px_rgba(0,0,0,0.44)] cursor-default"
+                class="flex flex-col justify-between items-start w-[280px] md:w-[400px] md:h-[250px] lg:h-[250px] bg-[#EFF4FC] rounded-md pt-8 pb-2 px-8 transition-all duration-500 ease-out hover:scale-[1.05] shadow-[0_25px_77px_-25px_rgba(0,0,0,0.44)] cursor-default"
                 v-for="order in orders"
                 :key="order.id"
                 :title="order.title"
@@ -25,17 +25,17 @@
                 :ordination="order.ordination"
             >
                 <div
-                    class="text-xl text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
+                    class="text-xl text-left text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
                 >
                     {{ order.title }}: {{ order.identification }}
                 </div>
                 <div
-                    class="text-xl text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
+                    class="text-xl text-left text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
                 >
                     {{ order.service }}
                 </div>
                 <div
-                    class="text-lg text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
+                    class="text-lg text-left text-black font-medium mb-2 mx-0 md:mx-8 lg:mx-0 w-full pb-2"
                 >
                     {{ order.start }}
                 </div>
@@ -53,12 +53,11 @@
                             ordination: order.ordination,
                         },
                     }"
-                    class="flex self-end gap-2 text-lg text-slate-100 font-medium mb-2 mx-0 md:mx-8 lg:mx-0 cursor-pointer px-4"
+                    class="flex self-end gap-2 text-lg text-[#244B8E] hover:font-bold font-medium mb-2 mx-0 md:mx-8 lg:mx-0 cursor-pointer px-4"
                 >
-                    <img src="/src/assets/edit.svg" class="h-5 my-auto" />
                     <p>Edit</p>
+                    <img src="/src/assets/edit.svg" class="h-6 my-auto" />
                 </router-link>
-                <!--<EditOrder :open="isOpen" @close="isOpen = !isOpen" :orders="orders"  />-->
             </div>
         </div>
         <div v-if="error" class="italic">{{ error }}</div>

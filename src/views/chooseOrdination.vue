@@ -98,7 +98,7 @@
                 <button
                     @click="selectOrdination()"
                     :disabled="selected == ''"
-                    class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full mt-16 cursor-pointer"
+                    class="bg-[#46669e] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full mt-16 cursor-pointer"
                 >
                     Next
                 </button>

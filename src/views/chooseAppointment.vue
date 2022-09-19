@@ -34,7 +34,7 @@
                 class="cursor-pointer w-full lg:w-1/2 xl:w-1/3"
             />
         </div>
-        <div class="flex flex-col items-center space-y-2">
+        <div class="flex flex-col items-center space-y-2 px-6 md:px-32">
             <div class="">Additional message (optional)</div>
             <input
                 v-model="message"
@@ -47,7 +47,7 @@
             to="/sucessOrder"
             @click="setOrder()"
             :disabled="date == ''"
-            class="mx-auto bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full my-16 cursor-pointer"
+            class="mx-auto bg-[#46669e] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full my-16 cursor-pointer"
         >
             Place an order
         </router-link>
@@ -125,9 +125,6 @@ export default {
         goBack() {
             return this.$router.go(-1)
         },
-    },
-    beforeMount() {
-        this.setOrder()
     },
     computed: {
         isoDate() {

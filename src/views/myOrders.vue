@@ -86,12 +86,18 @@ export default {
     },
     methods: {
         async getOrders() {
-            const querySnapshot = await getDocs(
-                collection(db, `users/${store.state.currentUid}/orders`)
+            const q = query(
+                collection(db, `users/${store.state.currentUid}/orders`),
+                where('time', '!=', '')
             )
-            querySnapshot.forEach((doc) => {
-                this.orders.push(doc.data())
-                console.log('Orders', doc.data())
+            onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    this.orders.push(doc.data())
+                    //store.state.currentAdminName = this.ordinations
+                })
+                if (this.orders.length === 0) {
+                    this.error = 'No new orders'
+                }
             })
         },
         goBack() {

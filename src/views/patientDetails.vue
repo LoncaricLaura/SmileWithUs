@@ -1,13 +1,15 @@
 <template>
     <div>
         <div
-            class="flex flex-col justify-center items-start md:items-center w-full h-[350px] lg:h-[380px] bg-[#EFF4FC] bg-opacity-75 pt-0 md:pt-8 px-6 md:px-24 lg:px-32"
+            class="flex flex-col justify-center items-start md:items-center w-full h-[350px] lg:h-[350px] bg-[#EFF4FC] bg-opacity-75 pt-0 md:pt-8 px-6 md:px-24 lg:px-32"
         >
             <div
-                class="text-5xl md:text-6xl text-center text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold py-12 mt-8"
+                class="text-5xl md:text-6xl text-center text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold pt-12 mt-8"
             >
                 Patient
-                <p class="text-2xl pt-4 pb-0 md:py-4">{{ title }}</p>
+                <p class="text-2xl pt-4 pb-0 md:py-4 font-normal">
+                    {{ title }}
+                </p>
             </div>
             <img
                 src="/src/assets/backarrow.svg"
@@ -21,26 +23,26 @@
             :key="info.id"
         >
             <div
-                class="flex flex-col justify-between space-y-4 pt-4 px-0 lg:px-12 w-full lg:w-1/4 border-r-none lg:border-r border-slate-300"
+                class="flex flex-col justify-between space-y-4 px-0 lg:px-12 w-full lg:w-1/4 border-r-none lg:border-r border-slate-300"
             >
                 <div class="space-y-4">
-                    <div class="text-left text-xl font-normal text-[#244B8E]">
+                    <div class="text-left text-xl font-normal text-black">
                         {{ info.title }}
                     </div>
-                    <div class="text-left text-xl font-normal text-[#244B8E]">
-                        Identification: {{ info.identification }}
+                    <div class="text-left text-xl font-normal text-black">
+                        <b>Identification:</b> {{ info.identification }}
                     </div>
                     <div class="space-y-4 flex flex-col items-start">
-                        <div class="text-xl font-normal text-[#244B8E] pb-2">
-                            Service: {{ info.service }}
+                        <div class="text-xl font-normal text-black pb-2">
+                            <b>Service:</b> {{ info.service }}
                         </div>
-                        <div class="text-xl font-normal text-[#244B8E] pb-2">
-                            Date & time: {{ info.start }}
+                        <div class="text-xl font-normal text-black pb-2">
+                            <b>Date & time:</b> {{ info.start }}
                         </div>
                         <div
-                            class="text-left text-xl font-normal text-[#244B8E] pb-2"
+                            class="text-left text-xl font-normal text-black pb-2"
                         >
-                            Message: {{ info.message }}
+                            <b>Message:</b> {{ info.message }}
                         </div>
                     </div>
                 </div>
@@ -48,7 +50,7 @@
                     <button
                         type="button"
                         @click="deletePatient()"
-                        class="flex justify-center items-end bg-[#385B97] text-white p-3 w-full md:w-1/3 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+                        class="flex justify-center items-end bg-red-400 text-white p-3 w-full md:w-1/3 font-semibold font-display hover:bg-red-500 rounded-full"
                     >
                         Delete
                     </button>
@@ -57,18 +59,18 @@
             <div
                 class="flex flex-col justify-between space-y-4 w-full px-0 lg:px-12 md:w-3/4 bg-white h-full"
             >
-                <div class="flex flex-col mt-12">
+                <div class="flex flex-col">
                     <div
                         class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 items-center"
                     >
                         <div
-                            class="flex flex-row items-center space-x-4 text-lg md:text-lg text-left font-normal text-black-900 border-b w-full pb-2"
+                            class="flex flex-row items-center space-x-4 text-lg md:text-lg text-left font-normal text-black-900 border-b w-full pb-4"
                         >
                             <p>{{ title }}</p>
                             <p class="text-lg">{{ identification }}</p>
                         </div>
                         <div
-                            class="flex justify-start text-sm md:text-md text-left text-black-900 border-b w-full pb-4"
+                            class="flex justify-start text-sm md:text-lg text-left text-black-900 border-b w-full pb-4"
                         >
                             EMAIL:
 
@@ -77,7 +79,7 @@
                     </div>
                     <div class="flex flex-row space-x-4 mt-8">
                         <div
-                            class="flex flex-row items-center text-sm md:text-md text-left text-black-900 border-b w-full pb-4"
+                            class="flex flex-row items-center text-sm md:text-lg text-left text-black-900 border-b w-full pb-4"
                         >
                             SERVICE:
                             <select class="w-full p-2" v-model="service">
@@ -95,7 +97,7 @@
                             </select>
                         </div>
                         <div
-                            class="flex items-center text-sm md:text-md text-left text-black-900 border-b w-full pb-4"
+                            class="flex items-center text-sm md:text-lg text-left text-black-900 border-b w-full pb-4"
                         >
                             MESSAGE:
 
@@ -105,7 +107,7 @@
 
                     <div class="flex flex-row gap-5 pt-6">
                         <div
-                            class="text-sm md:text-md text-black-900 text-left w-1/2"
+                            class="text-sm md:text-lg text-black-900 text-left w-1/2"
                         >
                             <p class="pb-[5px]">DATE:</p>
                             <Datepicker
@@ -121,7 +123,7 @@
                         <form class="w-1/2">
                             <div class="grid justify-items-start w-full">
                                 <div
-                                    class="text-sm md:text-md text-black-900 tracking-wide pb-[5px]"
+                                    class="text-sm md:text-lg text-black-900 tracking-wide pb-[5px]"
                                 >
                                     TIME
                                 </div>
@@ -141,8 +143,9 @@
                 </div>
                 <div class="flex pt-4">
                     <button
-                        class="bg-[#385B97] text-white p-4 w-32 rounded-full tracking-wide font-semibold font-display hover:bg-[#244B8E]"
+                        class="bg-teal-500 text-white p-3 w-28 rounded-full tracking-wide font-semibold font-display hover:bg-teal-600"
                         type="button"
+                        :disabled="time && date && service == ''"
                         @click="editOrder()"
                     >
                         Edit
@@ -215,14 +218,14 @@ export default {
                     `ordinations/${store.state.adminOrdiantionId}/orders/${this.title}`
                 )
             )
+            alert('Order deleted successful!')
+            this.$router.push({ name: 'patientList' })
             await deleteDoc(
                 doc(
                     db,
                     `users/${this.userid}/orders/${store.state.adminOrdiantionId}`
                 )
             )
-            alert('Order deleted successful!')
-            this.$router.push({ name: 'patientList' })
         },
         async getServices() {
             const q = query(
@@ -262,6 +265,8 @@ export default {
                     userid: this.userid,
                 }
             )
+            alert('Order edit successful!')
+            this.$router.push({ name: 'patientList' })
             await setDoc(
                 doc(
                     db,
@@ -278,8 +283,6 @@ export default {
                     ordination: this.ordination,
                 }
             )
-            alert('Order edit successful!')
-            this.$router.push({ name: 'patientList' })
         },
         goBack() {
             return this.$router.go(-1)

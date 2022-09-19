@@ -44,6 +44,13 @@
                             placeholder="12345678901"
                             required
                         />
+                        <label
+                            for="passwordWarning"
+                            v-if="identification.length !== 11"
+                            class="text-[#3D619E] text-xs font-display font-semibold mt-1"
+                            >Identification number must contain 11
+                            character</label
+                        >
                     </div>
                 </div>
                 <div class="flex flex-col items-start">
@@ -90,7 +97,7 @@
                         :disabled="
                             title && service && start && identification === ''
                         "
-                        class="bg-[#385B97] text-white p-4 w-1/3 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+                        class="bg-teal-500 text-white p-3 w-1/4 font-semibold font-display hover:bg-teal-600 rounded-full"
                     >
                         Add
                     </button>
@@ -223,6 +230,7 @@ export default {
                     identification: this.identification,
                 }
             )
+            alert('Patient added successfully')
         },
         goBack() {
             return this.$router.go(-1)

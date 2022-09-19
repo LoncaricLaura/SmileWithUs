@@ -78,9 +78,10 @@
                 </div>
                 <div class="mt-0 mb-4 md:mt-8 md:mb-4">
                     <button
-                        class="bg-[#385B97] text-white p-4 w-32 rounded-full tracking-wide font-semibold font-display hover:bg-[#244B8E]"
+                        class="bg-teal-500 hover:bg-teal-600 text-white p-3 w-32 rounded-full tracking-wide font-semibold font-display hover:bg-[#244B8E]"
                         type="button"
                         @click="editOrder(goBack())"
+                        :disabled="date && time == ''"
                     >
                         Confirm
                     </button>
@@ -174,6 +175,7 @@ export default {
                     ordination: this.ordination,
                 }
             )
+            alert('Appointment details successfully set')
             const templateParams = {
                 currentAdminName: store.state.currentAdminName,
                 title: this.title,

@@ -21,14 +21,14 @@
                 <router-link
                     to="/login"
                     v-if="!store.state.currentUserEmail"
-                    class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+                    class="bg-teal-500 text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-teal-600 rounded-full"
                 >
                     Book an appoitment
                 </router-link>
                 <router-link
                     to="/chooseordination"
                     v-if="store.state.currentUserEmail"
-                    class="bg-[#385B97] text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-[#244B8E] rounded-full"
+                    class="bg-teal-500 text-white text-md sm:text-xl text-center p-3 w-64 font-semibold font-display hover:bg-teal-600 rounded-full"
                 >
                     Book an appoitment
                 </router-link>
@@ -82,7 +82,7 @@
         </div>
         <div
             id="dental-offices"
-            class="flex flex-col items-end px-0 md:px-32 xl:pl-48 xl:pr-12 py-16 xl:bg-[url('/src/assets/home/background.jpg')] xl:bg-contain xl:bg-no-repeat bg-left bg-blend-darken bg-[#EFF4FC]"
+            class="flex flex-col items-start px-0 md:px-32 xl:pr-48 xl:pl-12 py-16 xl:bg-[url('/src/assets/home/background.jpg')] xl:bg-contain xl:bg-no-repeat bg-right bg-blend-darken bg-[#EFF4FC]"
         >
             <div
                 class="flex justify-center text-3xl sm:text-4xl text-slate-600 font-bold py-2 w-full xl:w-1/2"
@@ -90,7 +90,7 @@
                 Dental offices
             </div>
             <div
-                class="flex lg:justify-center xl:justify-end py-8 sm:py-16 mt-8 w-full"
+                class="flex lg:justify-center xl:justify-start py-8 sm:py-16 mt-8 w-full"
             >
                 <OrdinationsSlider :ordinations="ordinations" />
             </div>

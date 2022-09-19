@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="flex flex-col justify-center items-start md:items-center w-full h-[280px] lg:h-[380px] bg-[#EFF4FC] bg-opacity-75 pt-0 md:pt-8 px-6 md:px-24 lg:px-32"
+            class="flex flex-col justify-center items-start md:items-center w-full h-[280px] lg:h-[350px] bg-[#EFF4FC] bg-opacity-75 pt-0 md:pt-8 px-6 md:px-24 lg:px-32"
         >
             <div
                 class="text-5xl md:text-6xl text-left text-transparent bg-clip-text bg-gradient-to-r from-[#244B8E] to-[#385B97] font-bold py-12 mt-8"
@@ -11,8 +11,15 @@
         </div>
         <div class="py-12">
             <div
-                class="flex flex-col justify-start space-y-6 px-6 md:px-0 lg:px-32"
+                class="flex flex-col justify-start items-center space-y-6 px-6 md:px-0 lg:px-32"
             >
+                <div
+                    class="flex flex row justify-between space-x-4 w-full md:w-1/2 px-4 text-md font-bold"
+                >
+                    <div class="text-left w-1/3">Full name</div>
+                    <div class="text-left">Identification</div>
+                    <div class="text-lef w-1/3"></div>
+                </div>
                 <div
                     class="flex flex-row justify-between pb-2 space-x-4 w-full md:w-1/2"
                     v-for="patient in patients"
