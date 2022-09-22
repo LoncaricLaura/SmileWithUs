@@ -4,7 +4,8 @@
         v-if="
             this.$route.path !== '/login' &&
             this.$route.path !== '/signup' &&
-            this.$route.path !== '/appointmentslist'
+            this.$route.path !== '/appointmentslist' &&
+            this.$route.path !== '/forgotpassword'
         "
     >
         <div class="flex flex-col space-y-4 text-left mb-3 md:mb-0">

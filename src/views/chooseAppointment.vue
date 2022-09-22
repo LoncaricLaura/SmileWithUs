@@ -41,6 +41,7 @@
                 type="text"
                 class="border border-slate-300 rounded-md w-1/3 p-2"
                 placeholder="Message..."
+                maxlength="150"
             />
         </div>
         <router-link

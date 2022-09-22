@@ -26,10 +26,16 @@
                         />
                     </div>
                     <div class="flex flex-col items-start">
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center w-full">
                             <div class="text-lg font-bold text-[#244B8E] pb-2">
                                 Password
                             </div>
+                            <router-link
+                                to="/forgotpassword"
+                                v-if="!store.state.currentUserEmail"
+                                class="text-xs font-display font-semibold text-[#244B8E] hover:text-[#1D3C73] cursor-pointer"
+                                >Forgot Password?</router-link
+                            >
                         </div>
                         <input
                             class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"

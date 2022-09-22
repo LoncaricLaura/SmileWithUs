@@ -41,10 +41,11 @@
                         </div>
                         <input
                             class="w-full text-black text-md py-2 pl-2 border-b border-[#CCCCCC]"
-                            type="email"
+                            type="name"
                             v-model="fullName"
                             placeholder="Name Surname"
                             required
+                            autocomplete="name"
                         />
                     </div>
                     <div class="flex flex-col items-start">
@@ -57,13 +58,14 @@
                             v-model="identification"
                             placeholder="030345761795"
                             required
-                            autocomplete="email"
+                            autocomplete="off"
                             maxlength="11"
+                            minlength="11"
                         />
                         <label
                             for="passwordWarning"
                             v-if="identification.length !== 11"
-                            class="text-[#3D619E] text-sm font-display font-semibold mt-1"
+                            class="text-[#3D619E] text-left text-sm font-display font-semibold mt-1"
                             >Identification number must contain 11
                             character</label
                         >
@@ -97,9 +99,9 @@
                         />
                         <label
                             for="passwordWarning"
-                            v-if="password.length < 8"
+                            v-if="password.length < 6"
                             class="text-[#3D619E] text-sm font-display font-semibold mt-1"
-                            >Password must contain at least 8 character</label
+                            >Password must contain at least 6 character</label
                         >
                     </div>
                     <div class="flex flex-col items-start">
@@ -114,6 +116,7 @@
                             v-model="passwordRepeat"
                             placeholder="Enter your password"
                             required
+                            autocomplete="off"
                         />
                         <span
                             v-if="password && passwordRepeat !== password"
@@ -125,10 +128,7 @@
                         <button
                             type="button"
                             @click="signup()"
-                            :disabled="
-                                password !== passwordRepeat &&
-                                password.length < 8
-                            "
+                            :disabled="password && passwordRepeat !== password"
                             class="bg-[#385B97] text-white p-4 w-full font-semibold font-display hover:bg-[#244B8E] rounded-full mt-4"
                         >
                             Sign up
@@ -171,6 +171,9 @@ export default {
     },
     methods: {
         signup() {
+            if (this.identification.length !== 11) {
+                return 0
+            }
             const auth = getAuth()
             createUserWithEmailAndPassword(auth, this.username, this.password)
                 .then((userCredential) => {
@@ -186,7 +189,6 @@ export default {
                         email: user.email,
                         isAdmin: 'user',
                     })
-                    this.isLoading = false
                     console.log('Reg Success! Email: ' + user.email)
                 })
                 .then(() => {
@@ -200,8 +202,13 @@ export default {
                     console.error(e.message)
                     alert(e.message)
                     store.currentName = null
+                    this.password = ''
+                    this.passwordRepeat = ''
                 })
             this.isLoading = true
+            setTimeout(() => {
+                this.isLoading = false
+            }, 3000)
         },
     },
 }

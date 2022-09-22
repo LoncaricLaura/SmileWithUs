@@ -14,6 +14,7 @@ import editOrder from '/src/views/editOrder.vue'
 import patientList from '/src/views/patientList.vue'
 import patientDetails from '/src/views/patientDetails.vue'
 import myOrders from '/src/views/myOrders.vue'
+import forgotPassword from '/src/views/forgotPassword.vue'
 
 import { store } from '../store'
 
@@ -115,6 +116,13 @@ const routes = [
         props: true,
         meta: { title: 'My orders | SmileWithUs' },
     },
+    {
+        path: '/forgotpassword',
+        name: 'forgotPassword',
+        component: forgotPassword,
+        props: true,
+        meta: { title: 'Forgot password | SmileWithUs' },
+    },
 ]
 
 const router = createRouter({
@@ -134,7 +142,8 @@ router.beforeEach((to) => {
         to.path !== '/login' &&
         to.path !== '/signup' &&
         to.name !== 'ordinationScreen' &&
-        to.name !== 'priceList'
+        to.name !== 'priceList' &&
+        to.path !== '/forgotpassword'
     ) {
         return { path: '/' }
     }
